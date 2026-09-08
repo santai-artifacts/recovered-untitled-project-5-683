@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "start": "bun run index.ts"
+  },
+  "description": "AI-powered song recommendation app",
+  "dependencies": {
+    "hono": "^4.6.0",
+    "@anthropic-ai/sdk": "^0.36.0",
+    "music-metadata": "^10.0.0"
+  }
+}
