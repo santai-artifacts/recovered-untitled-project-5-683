@@ -2,7 +2,7 @@
   "scripts": {
     "start": "bun run index.ts"
   },
-  "description": "Song recommendation app",
+  "description": "Multi-category recommendation app",
   "dependencies": {
     "hono": "^4.6.0",
     "@anthropic-ai/sdk": "^0.36.0",
