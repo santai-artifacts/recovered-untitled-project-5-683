@@ -9,23 +9,21 @@ const html = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SoundMatch — AI Song Recommendations</title>
+  <title>Soundmatch</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #07070f;
-      --surface: #0f0f1e;
-      --surface-2: #161628;
-      --border: rgba(130, 90, 255, 0.15);
-      --primary: #8b5cf6;
-      --primary-soft: rgba(139, 92, 246, 0.15);
-      --pink: #ec4899;
-      --text: #eeeeff;
-      --text-muted: #60608a;
-      --text-dim: #9090b8;
+      --bg: #faf8f4;
+      --surface: #f3efe5;
+      --border: #d8d2c4;
+      --text: #1a1714;
+      --muted: #7a7060;
+      --accent: #a63228;
+      --accent-bg: #f9efee;
+      --link: #a63228;
     }
 
     body {
@@ -35,351 +33,376 @@ const html = `<!DOCTYPE html>
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
     }
 
+    /* Header */
     header {
-      width: 100%;
-      padding: 20px 40px;
-      display: flex;
-      align-items: center;
+      padding: 28px 40px 20px;
       border-bottom: 1px solid var(--border);
     }
 
-    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-
-    .logo-icon {
-      width: 34px; height: 34px; border-radius: 9px;
-      background: linear-gradient(135deg, var(--primary), var(--pink));
-      display: flex; align-items: center; justify-content: center; font-size: 16px;
+    .site-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      text-decoration: none;
     }
 
-    .logo-name {
-      font-size: 18px; font-weight: 700;
-      background: linear-gradient(135deg, #b78cff, #f472b6);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    /* Main */
+    main {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 64px 40px 100px;
+      flex: 1;
     }
 
-    main { width: 100%; max-width: 760px; padding: 56px 24px 80px; flex: 1; }
-
-    .hero { text-align: center; margin-bottom: 44px; }
+    /* Hero */
+    .hero { margin-bottom: 52px; }
 
     .hero h1 {
-      font-size: clamp(30px, 5vw, 50px); font-weight: 700;
-      line-height: 1.12; letter-spacing: -0.025em; margin-bottom: 14px;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(36px, 5.5vw, 56px);
+      font-weight: 400;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+      color: var(--text);
     }
 
-    .hero h1 .grad {
-      background: linear-gradient(135deg, #b388ff, #f472b6);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
     }
 
-    .hero p { font-size: 17px; color: var(--text-muted); max-width: 420px; margin: 0 auto; line-height: 1.65; }
+    .hero p {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 440px;
+      font-weight: 300;
+    }
 
+    /* Divider */
+    .rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    /* Upload zone */
     .upload-zone {
-      border: 2px dashed var(--border); border-radius: 22px;
-      padding: 52px 32px 40px; text-align: center;
-      background: var(--surface); cursor: pointer;
-      transition: border-color 0.22s, box-shadow 0.22s, transform 0.18s, background 0.18s;
-      position: relative; overflow: hidden;
-    }
-
-    .upload-zone::after {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 60%, rgba(139,92,246,0.06) 0%, transparent 68%);
-      pointer-events: none;
+      border: 1.5px dashed var(--border);
+      border-radius: 4px;
+      padding: 48px 32px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: transparent;
     }
 
     .upload-zone:hover, .upload-zone.drag-over {
-      border-color: var(--primary); background: var(--surface-2);
-      box-shadow: 0 0 48px rgba(139,92,246,0.13), 0 0 0 1px rgba(139,92,246,0.1);
+      border-color: var(--accent);
+      background: var(--accent-bg);
     }
 
-    .upload-zone.drag-over { transform: scale(1.01); }
+    .upload-zone.drag-over { border-style: solid; }
 
-    .equalizer {
-      display: flex; align-items: flex-end; justify-content: center;
-      gap: 5px; height: 60px; margin-bottom: 22px;
+    .upload-label {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20px;
+      font-weight: 400;
+      font-style: italic;
+      margin-bottom: 10px;
+      color: var(--text);
     }
 
-    .eq-bar {
-      width: 6px; border-radius: 3px;
-      background: linear-gradient(to top, var(--primary), var(--pink));
-      animation: eq var(--spd, 1s) ease-in-out infinite alternate;
+    .upload-hint {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 28px;
+      font-weight: 300;
     }
-
-    @keyframes eq {
-      from { height: var(--lo, 6px); }
-      to   { height: var(--hi, 48px); }
-    }
-
-    .upload-zone:hover .eq-bar,
-    .upload-zone.drag-over .eq-bar { animation-play-state: paused; }
-
-    .upload-label { font-size: 19px; font-weight: 600; margin-bottom: 6px; }
-    .upload-hint { color: var(--text-muted); font-size: 14px; margin-bottom: 26px; }
 
     .pick-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 11px 28px;
-      background: linear-gradient(135deg, var(--primary), var(--pink));
-      border: none; border-radius: 11px; color: #fff;
-      font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit;
-      transition: opacity 0.18s, transform 0.18s;
+      display: inline-block;
+      padding: 10px 24px;
+      background: var(--text);
+      color: var(--bg);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.15s;
     }
 
-    .pick-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-    .pick-btn:active { transform: translateY(0); }
-    .formats-note { margin-top: 14px; font-size: 12px; color: var(--text-muted); }
+    .pick-btn:hover { background: var(--accent); }
+
+    .formats-note {
+      margin-top: 16px;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
     #file-input { display: none; }
 
+    /* File selected */
     .file-row {
-      display: flex; align-items: center; gap: 14px;
-      padding: 18px 22px; background: var(--surface);
-      border: 1px solid var(--border); border-radius: 16px; margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-top: 24px;
     }
 
-    .file-icon {
-      width: 44px; height: 44px; border-radius: 11px;
-      background: linear-gradient(135deg, var(--primary), var(--pink));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px; flex-shrink: 0;
+    .file-info { flex: 1; min-width: 0; }
+
+    .file-name {
+      font-size: 14px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text);
     }
 
-    .file-meta { flex: 1; min-width: 0; }
-
-    .file-name { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .file-size { color: var(--text-muted); font-size: 13px; margin-top: 2px; }
+    .file-size { font-size: 12px; color: var(--muted); margin-top: 2px; font-weight: 300; }
 
     .go-btn {
-      padding: 10px 22px;
-      background: linear-gradient(135deg, var(--primary), var(--pink));
-      border: none; border-radius: 11px; color: #fff;
-      font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit;
-      white-space: nowrap; transition: opacity 0.18s, transform 0.18s; flex-shrink: 0;
+      padding: 9px 20px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+      flex-shrink: 0;
     }
 
-    .go-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-    .go-btn:active { transform: translateY(0); }
+    .go-btn:hover { opacity: 0.85; }
 
+    /* Error */
     .error-box {
-      display: flex; align-items: center; gap: 10px;
-      padding: 14px 18px;
-      background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.22);
-      border-radius: 12px; color: #fca5a5; font-size: 14px; margin-top: 14px;
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: var(--accent-bg);
+      border-left: 3px solid var(--accent);
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 400;
     }
 
-    .loading { text-align: center; padding: 64px 0; }
+    /* Loading */
+    .loading { padding: 72px 0; text-align: center; }
 
-    .load-bars {
-      display: flex; align-items: flex-end; justify-content: center;
-      gap: 5px; height: 52px; margin: 0 auto 24px;
+    .loading-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--text);
     }
 
-    .load-bar {
-      width: 7px; border-radius: 4px;
-      background: linear-gradient(to top, var(--primary), var(--pink));
-      animation: lb 0.85s ease-in-out infinite alternate;
+    .loading-dots::after {
+      content: '';
+      animation: dots 1.4s steps(4, end) infinite;
     }
 
-    .load-bar:nth-child(1){ animation-delay:0.00s; --lh:26px; }
-    .load-bar:nth-child(2){ animation-delay:0.11s; --lh:44px; }
-    .load-bar:nth-child(3){ animation-delay:0.22s; --lh:34px; }
-    .load-bar:nth-child(4){ animation-delay:0.33s; --lh:52px; }
-    .load-bar:nth-child(5){ animation-delay:0.44s; --lh:30px; }
-    .load-bar:nth-child(6){ animation-delay:0.55s; --lh:46px; }
-    .load-bar:nth-child(7){ animation-delay:0.66s; --lh:22px; }
-
-    @keyframes lb {
-      from { height: 6px; }
-      to   { height: var(--lh); }
+    @keyframes dots {
+      0%   { content: ''; }
+      25%  { content: '.'; }
+      50%  { content: '..'; }
+      75%  { content: '...'; }
+      100% { content: ''; }
     }
 
-    .load-title { font-size: 18px; font-weight: 600; }
-    .load-sub { color: var(--text-muted); font-size: 14px; margin-top: 6px; }
+    /* Results */
+    .results { animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-    .results { animation: rise 0.38s ease; }
-
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .results-meta {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 6px;
+      font-weight: 400;
     }
 
-    .based-pill {
-      display: flex; align-items: center; gap: 10px;
-      padding: 14px 18px; background: var(--surface);
-      border: 1px solid var(--border); border-radius: 13px;
-      margin-bottom: 28px; overflow: hidden;
+    .results-based {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 40px;
+      line-height: 1.4;
     }
 
-    .pill-label {
-      font-size: 11px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.1em; color: var(--text-muted); white-space: nowrap;
+    .results-based em { font-style: italic; color: var(--accent); }
+
+    /* Rec list */
+    .rec-list { margin-bottom: 48px; }
+
+    .rec-item {
+      padding: 24px 0;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 16px;
+      align-items: start;
+      animation: fadeIn 0.3s ease backwards;
     }
 
-    .pill-dot { color: var(--text-muted); }
-    .pill-title { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .pill-artist { color: var(--primary); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rec-item:last-child { border-bottom: 1px solid var(--border); }
 
-    .section-heading { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
-    .section-sub { color: var(--text-muted); font-size: 13px; margin-bottom: 22px; }
-
-    .rec-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
-
-    .rec-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 16px; padding: 18px 20px;
-      display: grid; grid-template-columns: 38px 1fr auto;
-      gap: 14px; align-items: start;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      animation: rise 0.38s ease backwards;
+    .rec-n {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 400;
+      padding-top: 4px;
+      letter-spacing: 0.03em;
     }
 
-    .rec-card:hover {
-      border-color: rgba(139,92,246,0.38);
-      box-shadow: 0 4px 28px rgba(139,92,246,0.09);
-    }
-
-    .rec-num {
-      width: 34px; height: 34px; border-radius: 9px;
-      background: linear-gradient(135deg, rgba(139,92,246,0.18), rgba(236,72,153,0.18));
-      border: 1px solid rgba(139,92,246,0.22);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 700; color: var(--primary); flex-shrink: 0;
-    }
-
-    .rec-body { min-width: 0; }
+    .rec-body {}
 
     .rec-title {
-      font-size: 16px; font-weight: 600;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 4px;
     }
 
-    .rec-meta { display: flex; align-items: center; gap: 7px; margin-bottom: 9px; }
-    .rec-artist { color: var(--primary); font-size: 13px; font-weight: 500; }
-
-    .rec-year {
-      font-size: 11px; color: var(--text-muted);
-      background: var(--surface-2); padding: 2px 7px; border-radius: 20px;
+    .rec-byline {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-weight: 300;
     }
 
-    .rec-reason { font-size: 13px; color: var(--text-dim); font-style: italic; line-height: 1.55; }
-    .rec-links { display: flex; flex-direction: column; gap: 7px; flex-shrink: 0; }
+    .rec-byline strong { color: var(--text); font-weight: 500; }
 
-    .link-btn {
-      display: flex; align-items: center; gap: 5px;
-      padding: 6px 13px; border-radius: 8px;
-      font-size: 12px; font-weight: 600; text-decoration: none; white-space: nowrap;
-      transition: opacity 0.15s, transform 0.15s;
+    .rec-reason {
+      font-size: 14px;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.65;
+      margin-bottom: 12px;
+      font-weight: 300;
     }
 
-    .link-btn:hover { opacity: 0.8; transform: translateX(1px); }
+    .rec-links { display: flex; gap: 16px; }
 
-    .btn-sp { background: rgba(30,215,96,0.1); color: #22c55e; border: 1px solid rgba(30,215,96,0.22); }
-    .btn-yt { background: rgba(255,50,50,0.1); color: #f87171; border: 1px solid rgba(255,50,50,0.2); }
-
-    .reset-btn {
-      width: 100%; padding: 13px; background: transparent;
-      border: 1px solid var(--border); border-radius: 12px;
-      color: var(--text-muted); font-size: 14px; font-weight: 500;
-      cursor: pointer; font-family: inherit; transition: all 0.2s;
+    .rec-link {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s;
+      padding-bottom: 1px;
     }
 
-    .reset-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); }
+    .rec-link:hover { border-color: var(--accent); }
+
+    /* Reset */
+    .reset-link {
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      background: none;
+      border: none;
+      font-family: inherit;
+      transition: color 0.15s;
+      padding: 0;
+    }
+
+    .reset-link:hover { color: var(--text); }
 
     .hidden { display: none !important; }
 
     @media (max-width: 580px) {
-      header { padding: 16px 20px; }
-      main { padding: 36px 16px 60px; }
-      .rec-card { grid-template-columns: 32px 1fr; grid-template-rows: auto auto; }
-      .rec-links { grid-column: 2; flex-direction: row; }
+      header { padding: 20px 24px 16px; }
+      main { padding: 44px 24px 80px; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <a class="logo" href="#">
-    <div class="logo-icon">&#127925;</div>
-    <span class="logo-name">SoundMatch</span>
-  </a>
+  <a class="site-name" href="#">Soundmatch</a>
 </header>
 
 <main>
   <div class="hero">
-    <h1>Upload a song,<br>discover what's <span class="grad">next</span></h1>
-    <p>Drop any audio file and we'll find 5 tracks that match its vibe — powered by AI.</p>
+    <h1>A song you love.<br><em>Five you haven't heard.</em></h1>
+    <p>Upload any track and get five recommendations matched to its character.</p>
   </div>
 
+  <!-- Upload -->
   <div id="upload-section">
     <div class="upload-zone" id="drop-zone">
-      <div class="equalizer" aria-hidden="true">
-        <div class="eq-bar" style="--lo:5px;--hi:18px;--spd:0.82s"></div>
-        <div class="eq-bar" style="--lo:7px;--hi:46px;--spd:1.10s"></div>
-        <div class="eq-bar" style="--lo:4px;--hi:30px;--spd:0.93s"></div>
-        <div class="eq-bar" style="--lo:9px;--hi:58px;--spd:1.25s"></div>
-        <div class="eq-bar" style="--lo:5px;--hi:38px;--spd:0.76s"></div>
-        <div class="eq-bar" style="--lo:8px;--hi:50px;--spd:1.04s"></div>
-        <div class="eq-bar" style="--lo:6px;--hi:26px;--spd:1.18s"></div>
-        <div class="eq-bar" style="--lo:10px;--hi:54px;--spd:0.88s"></div>
-        <div class="eq-bar" style="--lo:4px;--hi:22px;--spd:1.30s"></div>
-      </div>
-      <div class="upload-label">Drop your song here</div>
-      <div class="upload-hint">or click to browse files</div>
+      <div class="upload-label">Drop a song here</div>
+      <div class="upload-hint">or browse your files</div>
       <button class="pick-btn" onclick="document.getElementById('file-input').click(); event.stopPropagation()">
-        &#8593; Choose a song
+        Choose a file
       </button>
-      <div class="formats-note">MP3 &middot; FLAC &middot; WAV &middot; M4A &middot; OGG &middot; AAC &nbsp;&middot;&nbsp; up to 50 MB</div>
+      <div class="formats-note">MP3 &middot; FLAC &middot; WAV &middot; M4A &middot; OGG &middot; up to 50 MB</div>
       <input type="file" id="file-input" accept="audio/*,.mp3,.flac,.wav,.m4a,.ogg,.aac">
     </div>
 
     <div id="file-row" class="file-row hidden">
-      <div class="file-icon">&#127925;</div>
-      <div class="file-meta">
+      <div class="file-info">
         <div class="file-name" id="fname"></div>
         <div class="file-size" id="fsize"></div>
       </div>
-      <button class="go-btn" onclick="analyze()">Find matches &#8594;</button>
+      <button class="go-btn" onclick="analyze()">Find matches</button>
     </div>
 
-    <div id="err-box" class="error-box hidden">
-      <span>&#9888;&#65039;</span><span id="err-text"></span>
+    <div id="err-box" class="error-box hidden" id="err-box">
+      <span id="err-text"></span>
     </div>
   </div>
 
-  <div id="loading-section" class="loading hidden" aria-live="polite">
-    <div class="load-bars" aria-hidden="true">
-      <div class="load-bar"></div>
-      <div class="load-bar"></div>
-      <div class="load-bar"></div>
-      <div class="load-bar"></div>
-      <div class="load-bar"></div>
-      <div class="load-bar"></div>
-      <div class="load-bar"></div>
-    </div>
-    <div class="load-title">Analyzing your song&hellip;</div>
-    <div class="load-sub">Curating tracks with the same vibe</div>
+  <!-- Loading -->
+  <div id="loading-section" class="loading hidden">
+    <div class="loading-text">Finding something you'll love<span class="loading-dots"></span></div>
   </div>
 
+  <!-- Results -->
   <div id="results-section" class="results hidden">
-    <div class="based-pill">
-      <span class="pill-label">Based on</span>
-      <span class="pill-dot">&middot;</span>
-      <span class="pill-title" id="r-title"></span>
-      <span class="pill-dot">&middot;</span>
-      <span class="pill-artist" id="r-artist"></span>
+    <div class="results-meta">Listening to</div>
+    <div class="results-based">
+      <em id="r-title"></em> &mdash; <span id="r-artist"></span>
     </div>
-    <div class="section-heading">Your recommendations</div>
-    <div class="section-sub">Songs curated to match your track's energy and style</div>
+
     <div class="rec-list" id="rec-list"></div>
-    <button class="reset-btn" onclick="reset()">&#8617; Try another song</button>
+
+    <button class="reset-link" onclick="reset()">&#8592; Try a different song</button>
   </div>
 </main>
 
 <script>
   var selectedFile = null;
-
   var dropZone  = document.getElementById('drop-zone');
   var fileInput = document.getElementById('file-input');
 
@@ -409,12 +432,12 @@ const html = `<!DOCTYPE html>
   }
 
   function fmtSize(b) {
-    return b < 1024 * 1024 ? (b / 1024).toFixed(1) + ' KB' : (b / 1024 / 1024).toFixed(1) + ' MB';
+    return b < 1048576 ? (b / 1024).toFixed(1) + ' KB' : (b / 1048576).toFixed(1) + ' MB';
   }
 
   async function analyze() {
     if (!selectedFile) return;
-    if (selectedFile.size > 50 * 1024 * 1024) {
+    if (selectedFile.size > 52428800) {
       showErr('File too large. Please choose a song under 50 MB.');
       return;
     }
@@ -432,14 +455,14 @@ const html = `<!DOCTYPE html>
       renderResults(data);
     } catch(e) {
       showState('upload');
-      showErr('Network error. Please check your connection and try again.');
+      showErr('Network error. Please try again.');
     }
   }
 
-  function showState(state) {
-    document.getElementById('upload-section').classList.toggle('hidden', state !== 'upload');
-    document.getElementById('loading-section').classList.toggle('hidden', state !== 'loading');
-    document.getElementById('results-section').classList.toggle('hidden', state !== 'results');
+  function showState(s) {
+    document.getElementById('upload-section').classList.toggle('hidden', s !== 'upload');
+    document.getElementById('loading-section').classList.toggle('hidden', s !== 'loading');
+    document.getElementById('results-section').classList.toggle('hidden', s !== 'results');
   }
 
   function showErr(msg) {
@@ -449,7 +472,7 @@ const html = `<!DOCTYPE html>
 
   function renderResults(data) {
     document.getElementById('r-title').textContent  = data.detected && data.detected.title  ? data.detected.title  : selectedFile.name;
-    document.getElementById('r-artist').textContent = data.detected && data.detected.artist ? data.detected.artist : 'Unknown Artist';
+    document.getElementById('r-artist').textContent = data.detected && data.detected.artist ? data.detected.artist : 'Unknown';
 
     var list = document.getElementById('rec-list');
     list.innerHTML = '';
@@ -457,22 +480,25 @@ const html = `<!DOCTYPE html>
     var recs = data.recommendations || [];
     recs.forEach(function(rec, i) {
       var q    = encodeURIComponent(rec.title + ' ' + rec.artist);
-      var card = document.createElement('div');
-      card.className = 'rec-card';
-      card.style.animationDelay = (i * 0.07) + 's';
-      var yearBadge = rec.year ? '<span class="rec-year">' + esc(rec.year) + '</span>' : '';
-      card.innerHTML =
-        '<div class="rec-num">' + (i + 1) + '</div>' +
+      var item = document.createElement('div');
+      item.className = 'rec-item';
+      item.style.animationDelay = (i * 0.06) + 's';
+
+      var byline = '<strong>' + esc(rec.artist) + '</strong>';
+      if (rec.year) byline += ' &nbsp;&middot;&nbsp; ' + esc(rec.year);
+
+      item.innerHTML =
+        '<div class="rec-n">0' + (i + 1) + '</div>' +
         '<div class="rec-body">' +
           '<div class="rec-title">' + esc(rec.title) + '</div>' +
-          '<div class="rec-meta"><span class="rec-artist">' + esc(rec.artist) + '</span>' + yearBadge + '</div>' +
-          '<div class="rec-reason">&ldquo;' + esc(rec.reason) + '&rdquo;</div>' +
-        '</div>' +
-        '<div class="rec-links">' +
-          '<a class="link-btn btn-sp" href="https://open.spotify.com/search/' + q + '" target="_blank" rel="noopener">&#9834; Spotify</a>' +
-          '<a class="link-btn btn-yt" href="https://www.youtube.com/results?search_query=' + q + '" target="_blank" rel="noopener">&#9654; YouTube</a>' +
+          '<div class="rec-byline">' + byline + '</div>' +
+          '<div class="rec-reason">' + esc(rec.reason) + '</div>' +
+          '<div class="rec-links">' +
+            '<a class="rec-link" href="https://open.spotify.com/search/' + q + '" target="_blank" rel="noopener">Spotify</a>' +
+            '<a class="rec-link" href="https://www.youtube.com/results?search_query=' + q + '" target="_blank" rel="noopener">YouTube</a>' +
+          '</div>' +
         '</div>';
-      list.appendChild(card);
+      list.appendChild(item);
     });
 
     showState('results');
@@ -508,8 +534,7 @@ app.post('/api/analyze', async (c) => {
       return c.json({ error: 'Please upload an audio file.' }, 400)
     }
 
-    const MAX_SIZE = 50 * 1024 * 1024
-    if (file.size > MAX_SIZE) {
+    if (file.size > 50 * 1024 * 1024) {
       return c.json({ error: 'File too large. Please upload a file under 50MB.' }, 400)
     }
 
@@ -548,24 +573,24 @@ app.post('/api/analyze', async (c) => {
       messages: [
         {
           role: 'user',
-          content: `You are an expert music curator. A user uploaded a song with the following detected metadata:
+          content: `You are a knowledgeable music curator. A listener uploaded a song with the following metadata:
 
 ${songDescription}
 
-Based on this song's artist, genre, mood, era, and style, recommend 5 songs they would love. Make them diverse but cohesive — similar enough to feel like a playlist, with some variety in mood or subgenre.
+Recommend 5 songs they would genuinely love. Think about genre, era, mood, texture, and artist influence. Vary the picks slightly — don't just list the most obvious similar artists.
 
-Respond ONLY with a JSON object (no markdown fences, no explanation before or after):
+Return ONLY valid JSON, no markdown, no extra text:
 {
   "detected": {
-    "title": "the song title",
-    "artist": "the artist name (or 'Unknown Artist' if not known)"
+    "title": "song title",
+    "artist": "artist name or 'Unknown'"
   },
   "recommendations": [
     {
       "title": "Song Title",
       "artist": "Artist Name",
-      "year": "release year if known, else empty string",
-      "reason": "One vivid sentence explaining why this song pairs perfectly with the uploaded track"
+      "year": "year or empty string",
+      "reason": "One specific sentence about why this fits"
     }
   ]
 }`,
@@ -579,7 +604,7 @@ Respond ONLY with a JSON object (no markdown fences, no explanation before or af
       .join('')
 
     const jsonStr = raw.match(/\{[\s\S]*\}/)?.[0]
-    if (!jsonStr) throw new Error('Could not parse AI response')
+    if (!jsonStr) throw new Error('Could not parse response')
 
     const result = JSON.parse(jsonStr)
     return c.json({ ...result, metadata })
