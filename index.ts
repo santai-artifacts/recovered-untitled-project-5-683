@@ -447,6 +447,7 @@ const html = `<!DOCTYPE html>
     if (cat === currentCat) return;
     currentCat = cat;
     reset(true);
+    document.getElementById('file-row').classList.add('hidden');
 
     // Update tabs
     document.querySelectorAll('.cat-btn').forEach(function(b) {
@@ -521,7 +522,7 @@ const html = `<!DOCTYPE html>
     var form = new FormData();
     form.append('category', currentCat);
     form.append('file', selectedFile);
-    await doRequest(form);
+    return doRequest(form);
   }
 
   function submitText(e) {
