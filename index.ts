@@ -132,7 +132,7 @@ Return ONLY valid JSON:
     }
 
     const msg = await ai.messages.create({
-      model: 'anthropic-claude-bedrock4.5-sonnet',
+      model: 'anthropic-claude-bedrock4.5-haiku',
       max_tokens: 1500,
       messages,
     })
