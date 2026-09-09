@@ -32,7 +32,7 @@ app.post('/api/recommend', async (c) => {
 
       if (textTitle) {
         // Text-based search
-        messages = [{ role: 'user', content: `You are a music curator. Recommend 5 songs similar to "${textTitle}"${textArtist ? ' by ' + textArtist : ''}. Consider genre, era, mood, and artist style. Vary the picks.
+        messages = [{ role: 'user', content: `You are a music curator. Recommend 5 real, existing songs similar to "${textTitle}"${textArtist ? ' by ' + textArtist : ''}. Only recommend songs that genuinely exist — real titles by real artists. Do not invent or hallucinate any songs. Consider genre, era, mood, and artist style. Vary the picks.
 
 Return ONLY valid JSON:
 {
@@ -62,7 +62,7 @@ Return ONLY valid JSON:
 
         const info = Object.entries(meta).map(([k, v]) => `${k}: ${v}`).join('\n')
 
-        messages = [{ role: 'user', content: `You are a music curator. Recommend 5 songs based on this track's metadata. Consider genre, era, mood, and artist style. Vary the picks.
+        messages = [{ role: 'user', content: `You are a music curator. Recommend 5 real, existing songs based on this track's metadata. Only recommend songs that genuinely exist — real titles by real artists. Do not invent or hallucinate any songs. Consider genre, era, mood, and artist style. Vary the picks.
 
 ${info}
 
@@ -113,9 +113,9 @@ Return ONLY valid JSON:
       if (!title) return c.json({ error: 'Please enter a title.' }, 400)
 
       const prompts: Record<string, string> = {
-        book: `You are a literary expert. Recommend 5 books similar to "${title}"${creator ? ' by ' + creator : ''}. Consider genre, themes, writing style, and tone. Vary the picks.`,
-        tv:   `You are a TV critic. Recommend 5 shows similar to "${title}"${creator ? ' created by ' + creator : ''}. Consider genre, tone, pacing, and themes. Vary the picks.`,
-        film: `You are a film critic. Recommend 5 films similar to "${title}"${creator ? ' directed by ' + creator : ''}. Consider genre, style, and themes. Vary the picks.`,
+        book: `You are a literary expert. Recommend 5 real, existing books similar to "${title}"${creator ? ' by ' + creator : ''}. Only recommend books that genuinely exist — real titles by real authors. Do not invent or hallucinate any books. Consider genre, themes, writing style, and tone. Vary the picks.`,
+        tv:   `You are a TV critic. Recommend 5 real, existing TV shows similar to "${title}"${creator ? ' created by ' + creator : ''}. Only recommend shows that genuinely exist and have aired. Do not invent or hallucinate any shows. Consider genre, tone, pacing, and themes. Vary the picks.`,
+        film: `You are a film critic. Recommend 5 real, existing films similar to "${title}"${creator ? ' directed by ' + creator : ''}. Only recommend films that genuinely exist and have been released. Do not invent or hallucinate any films. Consider genre, style, and themes. Vary the picks.`,
       }
 
       const creatorLabels: Record<string, string> = { book: 'author', tv: 'creator', film: 'director' }
@@ -132,7 +132,7 @@ Return ONLY valid JSON:
     }
 
     const msg = await ai.messages.create({
-      model: 'anthropic-claude-bedrock4.5-haiku',
+      model: 'anthropic-claude-bedrock4.5-sonnet',
       max_tokens: 1500,
       messages,
     })
