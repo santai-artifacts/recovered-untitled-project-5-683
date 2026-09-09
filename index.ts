@@ -536,7 +536,7 @@ const html = `<!DOCTYPE html>
     form.append('category', currentCat);
     form.append('title', title);
     form.append('creator', creator);
-    doRequest(form);
+    return doRequest(form);
   }
 
   async function doRequest(form) {
