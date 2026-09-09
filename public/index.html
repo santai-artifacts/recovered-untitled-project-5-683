@@ -3,23 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SoundMatch — AI Song Recommendations</title>
+  <title>Likewise</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #07070f;
-      --surface: #0f0f1e;
-      --surface-2: #161628;
-      --border: rgba(130, 90, 255, 0.15);
-      --primary: #8b5cf6;
-      --primary-soft: rgba(139, 92, 246, 0.15);
-      --pink: #ec4899;
-      --text: #eeeeff;
-      --text-muted: #60608a;
-      --text-dim: #9090b8;
+      --bg: #faf8f4;
+      --surface: #f3efe5;
+      --border: #d8d2c4;
+      --text: #1a1714;
+      --muted: #7a7060;
+      --accent: #a63228;
+      --accent-bg: #f9efee;
     }
 
     body {
@@ -29,663 +26,610 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
     }
 
-    /* ── Header ── */
     header {
-      width: 100%;
-      padding: 20px 40px;
-      display: flex;
-      align-items: center;
+      padding: 28px 40px 20px;
       border-bottom: 1px solid var(--border);
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .site-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--text);
       text-decoration: none;
     }
 
-    .logo-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 9px;
-      background: linear-gradient(135deg, var(--primary), var(--pink));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-    }
-
-    .logo-name {
-      font-size: 18px;
-      font-weight: 700;
-      background: linear-gradient(135deg, #b78cff, #f472b6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* ── Main ── */
     main {
       width: 100%;
-      max-width: 760px;
-      padding: 56px 24px 80px;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 52px 40px 100px;
       flex: 1;
     }
 
-    /* ── Hero ── */
-    .hero {
-      text-align: center;
-      margin-bottom: 44px;
+    .cats {
+      display: flex;
+      align-items: center;
+      margin-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
     }
+
+    .cat-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 0 0 14px;
+      margin-bottom: -1px;
+      margin-right: 28px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .cat-btn:hover { color: var(--text); }
+    .cat-btn.active { color: var(--text); border-bottom-color: var(--accent); font-weight: 500; }
+
+    .hero { margin-bottom: 40px; }
 
     .hero h1 {
-      font-size: clamp(30px, 5vw, 50px);
-      font-weight: 700;
-      line-height: 1.12;
-      letter-spacing: -0.025em;
-      margin-bottom: 14px;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(34px, 5vw, 52px);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text);
     }
 
-    .hero h1 .grad {
-      background: linear-gradient(135deg, #b388ff, #f472b6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
 
-    .hero p {
-      font-size: 17px;
-      color: var(--text-muted);
-      max-width: 420px;
-      margin: 0 auto;
-      line-height: 1.65;
-    }
-
-    /* ── Upload zone ── */
-    .upload-zone {
-      border: 2px dashed var(--border);
-      border-radius: 22px;
-      padding: 52px 32px 40px;
+    .drop-zone {
+      border: 1.5px dashed var(--border);
+      border-radius: 4px;
+      padding: 48px 32px;
       text-align: center;
-      background: var(--surface);
       cursor: pointer;
-      transition: border-color 0.22s, box-shadow 0.22s, transform 0.18s, background 0.18s;
-      position: relative;
-      overflow: hidden;
+      transition: border-color 0.2s, background 0.2s;
     }
 
-    .upload-zone::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 50% 60%, rgba(139,92,246,0.06) 0%, transparent 68%);
-      pointer-events: none;
-    }
+    .drop-zone:hover, .drop-zone.drag-over { border-color: var(--accent); background: var(--accent-bg); }
+    .drop-zone.drag-over { border-style: solid; }
 
-    .upload-zone:hover,
-    .upload-zone.drag-over {
-      border-color: var(--primary);
-      background: var(--surface-2);
-      box-shadow: 0 0 48px rgba(139,92,246,0.13), 0 0 0 1px rgba(139,92,246,0.1);
-    }
-
-    .upload-zone.drag-over { transform: scale(1.01); }
-
-    /* Equalizer animation */
-    .equalizer {
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      gap: 5px;
-      height: 60px;
-      margin-bottom: 22px;
-    }
-
-    .eq-bar {
-      width: 6px;
-      border-radius: 3px;
-      background: linear-gradient(to top, var(--primary), var(--pink));
-      animation: eq var(--spd, 1s) ease-in-out infinite alternate;
-    }
-
-    @keyframes eq {
-      from { height: var(--lo, 6px); }
-      to   { height: var(--hi, 48px); }
-    }
-
-    .upload-zone:hover .eq-bar,
-    .upload-zone.drag-over .eq-bar { animation-play-state: paused; }
-
-    .upload-label {
+    .drop-label {
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: 19px;
-      font-weight: 600;
-      margin-bottom: 6px;
+      font-style: italic;
+      margin-bottom: 8px;
+      color: var(--text);
     }
 
-    .upload-hint {
-      color: var(--text-muted);
-      font-size: 14px;
-      margin-bottom: 26px;
+    .drop-hint { font-size: 13px; color: var(--muted); margin-bottom: 28px; font-weight: 300; }
+    .formats-note { margin-top: 16px; font-size: 11px; color: var(--muted); letter-spacing: 0.03em; text-transform: uppercase; }
+
+    .text-form { padding-top: 4px; }
+    .form-field { margin-bottom: 32px; }
+
+    .form-label {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-weight: 500;
     }
+
+    .form-input {
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      background: transparent;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--text);
+      padding: 6px 0 12px;
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+
+    .form-input:focus { border-color: var(--accent); }
+    .form-input::placeholder { color: var(--muted); font-style: italic; }
 
     .pick-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 11px 28px;
-      background: linear-gradient(135deg, var(--primary), var(--pink));
-      border: none;
-      border-radius: 11px;
-      color: #fff;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-      transition: opacity 0.18s, transform 0.18s;
-    }
-
-    .pick-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-    .pick-btn:active { transform: translateY(0); }
-
-    .formats-note {
-      margin-top: 14px;
+      display: inline-block;
+      padding: 10px 24px;
+      background: var(--text);
+      color: var(--bg);
+      font-family: 'Inter', sans-serif;
       font-size: 12px;
-      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.15s;
     }
 
-    #file-input { display: none; }
+    .pick-btn:hover { background: var(--accent); }
 
-    /* ── File selected ── */
     .file-row {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 18px 22px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      margin-top: 20px;
+      gap: 16px;
+      padding: 16px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-top: 24px;
     }
 
-    .file-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 11px;
-      background: linear-gradient(135deg, var(--primary), var(--pink));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      flex-shrink: 0;
-    }
-
-    .file-meta { flex: 1; min-width: 0; }
-
-    .file-name {
-      font-weight: 600;
-      font-size: 14px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .file-size { color: var(--text-muted); font-size: 13px; margin-top: 2px; }
+    .file-info { flex: 1; min-width: 0; }
+    .file-name { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .file-size { font-size: 12px; color: var(--muted); margin-top: 2px; font-weight: 300; }
 
     .go-btn {
-      padding: 10px 22px;
-      background: linear-gradient(135deg, var(--primary), var(--pink));
-      border: none;
-      border-radius: 11px;
+      padding: 9px 20px;
+      background: var(--accent);
       color: #fff;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-      white-space: nowrap;
-      transition: opacity 0.18s, transform 0.18s;
-      flex-shrink: 0;
-    }
-
-    .go-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-    .go-btn:active { transform: translateY(0); }
-
-    /* ── Error ── */
-    .error-box {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 18px;
-      background: rgba(239,68,68,0.08);
-      border: 1px solid rgba(239,68,68,0.22);
-      border-radius: 12px;
-      color: #fca5a5;
-      font-size: 14px;
-      margin-top: 14px;
-    }
-
-    /* ── Loading ── */
-    .loading {
-      text-align: center;
-      padding: 64px 0;
-    }
-
-    .load-bars {
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      gap: 5px;
-      height: 52px;
-      margin: 0 auto 24px;
-    }
-
-    .load-bar {
-      width: 7px;
-      border-radius: 4px;
-      background: linear-gradient(to top, var(--primary), var(--pink));
-      animation: lb 0.85s ease-in-out infinite alternate;
-    }
-
-    .load-bar:nth-child(1){ animation-delay:0.00s; --lh:26px; }
-    .load-bar:nth-child(2){ animation-delay:0.11s; --lh:44px; }
-    .load-bar:nth-child(3){ animation-delay:0.22s; --lh:34px; }
-    .load-bar:nth-child(4){ animation-delay:0.33s; --lh:52px; }
-    .load-bar:nth-child(5){ animation-delay:0.44s; --lh:30px; }
-    .load-bar:nth-child(6){ animation-delay:0.55s; --lh:46px; }
-    .load-bar:nth-child(7){ animation-delay:0.66s; --lh:22px; }
-
-    @keyframes lb {
-      from { height: 6px; }
-      to   { height: var(--lh); }
-    }
-
-    .load-title { font-size: 18px; font-weight: 600; }
-    .load-sub { color: var(--text-muted); font-size: 14px; margin-top: 6px; }
-
-    /* ── Results ── */
-    .results { animation: rise 0.38s ease; }
-
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .based-pill {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 18px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      margin-bottom: 28px;
-      overflow: hidden;
-    }
-
-    .pill-label {
-      font-size: 11px;
-      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
       white-space: nowrap;
-    }
-
-    .pill-dot { color: var(--text-muted); }
-
-    .pill-title { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-    .pill-artist { color: var(--primary); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-    .section-heading { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
-    .section-sub { color: var(--text-muted); font-size: 13px; margin-bottom: 22px; }
-
-    /* ── Rec cards ── */
-    .rec-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
-
-    .rec-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 18px 20px;
-      display: grid;
-      grid-template-columns: 38px 1fr auto;
-      gap: 14px;
-      align-items: start;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      animation: rise 0.38s ease backwards;
-    }
-
-    .rec-card:hover {
-      border-color: rgba(139,92,246,0.38);
-      box-shadow: 0 4px 28px rgba(139,92,246,0.09);
-    }
-
-    .rec-num {
-      width: 34px;
-      height: 34px;
-      border-radius: 9px;
-      background: linear-gradient(135deg, rgba(139,92,246,0.18), rgba(236,72,153,0.18));
-      border: 1px solid rgba(139,92,246,0.22);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--primary);
       flex-shrink: 0;
+      transition: opacity 0.15s;
     }
 
-    .rec-body { min-width: 0; }
+    .go-btn:hover { opacity: 0.85; }
+
+    .error-box {
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: var(--accent-bg);
+      border-left: 3px solid var(--accent);
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    .loading { padding: 72px 0; }
+
+    .loading-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--text);
+    }
+
+    .loading-dots::after {
+      content: '';
+      animation: dots 1.4s steps(4, end) infinite;
+    }
+
+    @keyframes dots {
+      0%   { content: ''; }
+      25%  { content: '.'; }
+      50%  { content: '..'; }
+      75%  { content: '...'; }
+      100% { content: ''; }
+    }
+
+    .results { animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .results-meta {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .results-based {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 40px;
+      line-height: 1.4;
+    }
+
+    .results-based em { font-style: italic; color: var(--accent); }
+
+    .rec-list { margin-bottom: 48px; }
+
+    .rec-item {
+      padding: 24px 0;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 16px;
+      align-items: start;
+      animation: fadeIn 0.3s ease backwards;
+    }
+
+    .rec-item:last-child { border-bottom: 1px solid var(--border); }
+
+    .rec-n { font-size: 12px; color: var(--muted); padding-top: 4px; letter-spacing: 0.02em; }
 
     .rec-title {
-      font-size: 16px;
-      font-weight: 600;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-bottom: 3px;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 4px;
     }
 
-    .rec-meta { display: flex; align-items: center; gap: 7px; margin-bottom: 9px; }
+    .rec-byline { font-size: 13px; color: var(--muted); margin-bottom: 10px; font-weight: 300; }
+    .rec-byline strong { color: var(--text); font-weight: 500; }
 
-    .rec-artist { color: var(--primary); font-size: 13px; font-weight: 500; }
+    .rec-reason { font-size: 14px; color: var(--muted); font-style: italic; line-height: 1.65; margin-bottom: 12px; font-weight: 300; }
 
-    .rec-year {
+    .rec-links { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .rec-link {
       font-size: 11px;
-      color: var(--text-muted);
-      background: var(--surface-2);
-      padding: 2px 7px;
-      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s;
+      padding-bottom: 1px;
     }
 
-    .rec-reason { font-size: 13px; color: var(--text-dim); font-style: italic; line-height: 1.55; }
+    .rec-link:hover { border-color: var(--accent); }
 
-    .rec-links { display: flex; flex-direction: column; gap: 7px; flex-shrink: 0; }
+    /* Fashion image */
+    .fashion-img-wrap {
+      grid-column: 1 / -1;
+      border-radius: 3px;
+      overflow: hidden;
+      background: var(--surface);
+      aspect-ratio: 3 / 2;
+      margin-bottom: -4px;
+    }
 
-    .link-btn {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      padding: 6px 13px;
-      border-radius: 8px;
+    .fashion-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .rec-price {
       font-size: 12px;
       font-weight: 600;
-      text-decoration: none;
-      white-space: nowrap;
-      transition: opacity 0.15s, transform 0.15s;
+      color: var(--accent);
+      letter-spacing: 0.02em;
     }
 
-    .link-btn:hover { opacity: 0.8; transform: translateX(1px); }
-
-    .btn-sp {
-      background: rgba(30,215,96,0.1);
-      color: #22c55e;
-      border: 1px solid rgba(30,215,96,0.22);
-    }
-
-    .btn-yt {
-      background: rgba(255,50,50,0.1);
-      color: #f87171;
-      border: 1px solid rgba(255,50,50,0.2);
-    }
-
-    /* ── Reset ── */
-    .reset-btn {
-      width: 100%;
-      padding: 13px;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      color: var(--text-muted);
-      font-size: 14px;
-      font-weight: 500;
+    .reset-link {
+      font-size: 13px;
+      color: var(--muted);
       cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      background: none;
+      border: none;
       font-family: inherit;
-      transition: all 0.2s;
+      transition: color 0.15s;
+      padding: 0;
     }
 
-    .reset-btn:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-      background: var(--primary-soft);
-    }
+    .reset-link:hover { color: var(--text); }
 
     .hidden { display: none !important; }
 
-    /* ── Responsive ── */
     @media (max-width: 580px) {
-      header { padding: 16px 20px; }
-      main { padding: 36px 16px 60px; }
-
-      .rec-card {
-        grid-template-columns: 32px 1fr;
-        grid-template-rows: auto auto;
-      }
-
-      .rec-links {
-        grid-column: 2;
-        flex-direction: row;
-      }
+      header { padding: 20px 24px 16px; }
+      main { padding: 36px 24px 80px; }
+      .cat-btn { margin-right: 18px; font-size: 11px; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <a class="logo" href="#">
-    <div class="logo-icon">🎵</div>
-    <span class="logo-name">SoundMatch</span>
-  </a>
+  <a class="site-name" href="#">Likewise</a>
 </header>
 
 <main>
 
-  <!-- Hero -->
+  <nav class="cats">
+    <button class="cat-btn active" data-cat="music">Music</button>
+    <button class="cat-btn" data-cat="book">Books</button>
+    <button class="cat-btn" data-cat="tv">TV</button>
+    <button class="cat-btn" data-cat="film">Film</button>
+    <button class="cat-btn" data-cat="fashion">Fashion</button>
+  </nav>
+
   <div class="hero">
-    <h1>Upload a song,<br>discover what's <span class="grad">next</span></h1>
-    <p>Drop any audio file and we'll find 5 tracks that match its vibe — powered by AI.</p>
+    <h1 id="headline">A song you love.<br><em>Five you haven't heard.</em></h1>
   </div>
 
-  <!-- Upload section -->
   <div id="upload-section">
-    <div class="upload-zone" id="drop-zone">
-      <div class="equalizer" aria-hidden="true">
-        <div class="eq-bar" style="--lo:5px;--hi:18px;--spd:0.82s"></div>
-        <div class="eq-bar" style="--lo:7px;--hi:46px;--spd:1.10s"></div>
-        <div class="eq-bar" style="--lo:4px;--hi:30px;--spd:0.93s"></div>
-        <div class="eq-bar" style="--lo:9px;--hi:58px;--spd:1.25s"></div>
-        <div class="eq-bar" style="--lo:5px;--hi:38px;--spd:0.76s"></div>
-        <div class="eq-bar" style="--lo:8px;--hi:50px;--spd:1.04s"></div>
-        <div class="eq-bar" style="--lo:6px;--hi:26px;--spd:1.18s"></div>
-        <div class="eq-bar" style="--lo:10px;--hi:54px;--spd:0.88s"></div>
-        <div class="eq-bar" style="--lo:4px;--hi:22px;--spd:1.30s"></div>
+
+    <div id="input-music" class="input-section">
+      <div class="drop-zone" id="music-drop">
+        <div class="drop-label">Drop a song here</div>
+        <div class="drop-hint">or browse your files</div>
+        <button class="pick-btn" id="music-pick-btn">Choose a file</button>
+        <div class="formats-note">MP3 &middot; FLAC &middot; WAV &middot; M4A &middot; OGG &middot; up to 50 MB</div>
+        <input type="file" id="music-file" accept="audio/*,.mp3,.flac,.wav,.m4a,.ogg,.aac" style="display:none">
       </div>
-      <div class="upload-label">Drop your song here</div>
-      <div class="upload-hint">or click to browse files</div>
-      <button class="pick-btn" onclick="document.getElementById('file-input').click(); event.stopPropagation()">
-        ↑ Choose a song
-      </button>
-      <div class="formats-note">MP3 · FLAC · WAV · M4A · OGG · AAC &nbsp;·&nbsp; up to 50 MB</div>
-      <input type="file" id="file-input" accept="audio/*,.mp3,.flac,.wav,.m4a,.ogg,.aac">
     </div>
 
-    <!-- File ready row -->
+    <div id="input-text" class="input-section hidden">
+      <form class="text-form" id="text-form">
+        <div class="form-field">
+          <label class="form-label" id="title-label">Title</label>
+          <input class="form-input" id="title-input" type="text" placeholder="Enter a title" autocomplete="off">
+        </div>
+        <div class="form-field" id="creator-field">
+          <label class="form-label" id="creator-label">Author</label>
+          <input class="form-input" id="creator-input" type="text" placeholder="Optional" autocomplete="off">
+        </div>
+        <button type="submit" class="pick-btn">Find matches</button>
+      </form>
+    </div>
+
+    <div id="input-fashion" class="input-section hidden">
+      <div class="drop-zone" id="fashion-drop">
+        <div class="drop-label">Drop an image here</div>
+        <div class="drop-hint">a photo of a piece or an outfit</div>
+        <button class="pick-btn" id="fashion-pick-btn">Choose an image</button>
+        <div class="formats-note">JPG &middot; PNG &middot; WEBP &middot; up to 20 MB</div>
+        <input type="file" id="fashion-file" accept="image/*,.jpg,.jpeg,.png,.webp" style="display:none">
+      </div>
+    </div>
+
     <div id="file-row" class="file-row hidden">
-      <div class="file-icon">🎵</div>
-      <div class="file-meta">
+      <div class="file-info">
         <div class="file-name" id="fname"></div>
         <div class="file-size" id="fsize"></div>
       </div>
-      <button class="go-btn" id="go-btn" onclick="analyze()">Find matches →</button>
+      <button class="go-btn" id="go-btn">Find matches</button>
     </div>
 
-    <div id="err-box" class="error-box hidden">
-      <span>⚠️</span><span id="err-text"></span>
-    </div>
+    <div id="err-box" class="error-box hidden"><span id="err-text"></span></div>
   </div>
 
-  <!-- Loading -->
-  <div id="loading-section" class="loading hidden" aria-live="polite">
-    <div class="load-bars" aria-hidden="true">
-      <div class="load-bar"></div>
-      <div class="load-bar"></div>
-      <div class="load-bar"></div>
-      <div class="load-bar"></div>
-      <div class="load-bar"></div>
-      <div class="load-bar"></div>
-      <div class="load-bar"></div>
-    </div>
-    <div class="load-title">Analyzing your song…</div>
-    <div class="load-sub">Curating tracks with the same vibe</div>
+  <div id="loading-section" class="loading hidden">
+    <div class="loading-text">Finding something you'll love<span class="loading-dots"></span></div>
   </div>
 
-  <!-- Results -->
   <div id="results-section" class="results hidden">
-    <div class="based-pill">
-      <span class="pill-label">Based on</span>
-      <span class="pill-dot">·</span>
-      <span class="pill-title" id="r-title"></span>
-      <span class="pill-dot">·</span>
-      <span class="pill-artist" id="r-artist"></span>
+    <div class="results-meta" id="r-verb">Listening to</div>
+    <div class="results-based">
+      <em id="r-title"></em><span id="r-sep"> &mdash; </span><span id="r-creator"></span>
     </div>
-
-    <div class="section-heading">Your recommendations</div>
-    <div class="section-sub">Songs curated to match your track's energy and style</div>
-
     <div class="rec-list" id="rec-list"></div>
-
-    <button class="reset-btn" onclick="reset()">↩ Try another song</button>
+    <button class="reset-link" id="reset-btn">&#8592; Try something else</button>
   </div>
 
 </main>
 
 <script>
-  let selectedFile = null
+  var currentCat = 'music';
+  var selectedFile = null;
 
-  const dropZone  = document.getElementById('drop-zone')
-  const fileInput = document.getElementById('file-input')
+  var CATS = {
+    music:   { headline: "A song you love.<br><em>Five you haven't heard.</em>",  verb: 'Listening to', input: 'music' },
+    book:    { headline: 'A book you loved.<br><em>Five to read next.</em>',       verb: 'Reading',      input: 'text',    titleLabel: 'Title',      creatorLabel: 'Author',   showCreator: true },
+    tv:      { headline: 'A show you finished.<br><em>Five to start next.</em>',   verb: 'Watching',     input: 'text',    titleLabel: 'Show title', creatorLabel: 'Creator',  showCreator: true },
+    film:    { headline: 'A film you loved.<br><em>Five to watch next.</em>',      verb: 'Watching',     input: 'text',    titleLabel: 'Title',      creatorLabel: 'Director', showCreator: true },
+    fashion: { headline: 'A piece you wear.<br><em>Five to add to it.</em>',       verb: 'Inspired by',  input: 'fashion' }
+  };
 
-  dropZone.addEventListener('click', () => fileInput.click())
+  function switchCat(cat) {
+    if (cat === currentCat) return;
+    currentCat = cat;
+    reset(true);
 
-  dropZone.addEventListener('dragover', (e) => {
-    e.preventDefault()
-    dropZone.classList.add('drag-over')
-  })
-  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'))
-  dropZone.addEventListener('drop', (e) => {
-    e.preventDefault()
-    dropZone.classList.remove('drag-over')
-    if (e.dataTransfer.files[0]) selectFile(e.dataTransfer.files[0])
-  })
+    document.querySelectorAll('.cat-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.cat === cat);
+    });
 
-  fileInput.addEventListener('change', () => {
-    if (fileInput.files[0]) selectFile(fileInput.files[0])
-  })
+    document.getElementById('headline').innerHTML = CATS[cat].headline;
+    document.querySelectorAll('.input-section').forEach(function(el) { el.classList.add('hidden'); });
 
-  function selectFile(file) {
-    selectedFile = file
-    document.getElementById('fname').textContent = file.name
-    document.getElementById('fsize').textContent = fmtSize(file.size)
-    document.getElementById('file-row').classList.remove('hidden')
-    document.getElementById('err-box').classList.add('hidden')
+    var cfg = CATS[cat];
+    if (cfg.input === 'text') {
+      document.getElementById('input-text').classList.remove('hidden');
+      document.getElementById('title-label').textContent = cfg.titleLabel;
+      document.getElementById('creator-field').classList.toggle('hidden', !cfg.showCreator);
+      if (cfg.showCreator) document.getElementById('creator-label').textContent = cfg.creatorLabel;
+      document.getElementById('title-input').value = '';
+      document.getElementById('creator-input').value = '';
+      document.getElementById('title-input').focus();
+    } else if (cfg.input === 'music') {
+      document.getElementById('input-music').classList.remove('hidden');
+    } else if (cfg.input === 'fashion') {
+      document.getElementById('input-fashion').classList.remove('hidden');
+    }
+  }
+
+  document.querySelector('.cats').addEventListener('click', function(e) {
+    var btn = e.target.closest('.cat-btn');
+    if (btn) switchCat(btn.dataset.cat);
+  });
+
+  document.getElementById('reset-btn').addEventListener('click', function() { reset(); });
+  document.getElementById('go-btn').addEventListener('click', submitFile);
+
+  document.getElementById('text-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var title   = document.getElementById('title-input').value.trim();
+    var creator = document.getElementById('creator-input').value.trim();
+    if (!title) { showErr('Please enter a title.'); return; }
+    var form = new FormData();
+    form.append('category', currentCat);
+    form.append('title', title);
+    form.append('creator', creator);
+    doRequest(form);
+  });
+
+  setupDrop('music-drop',   'music-file',   'music-pick-btn');
+  setupDrop('fashion-drop', 'fashion-file', 'fashion-pick-btn');
+
+  function setupDrop(zoneId, inputId, pickBtnId) {
+    var zone    = document.getElementById(zoneId);
+    var input   = document.getElementById(inputId);
+    var pickBtn = document.getElementById(pickBtnId);
+    pickBtn.addEventListener('click',     function(e) { e.stopPropagation(); input.click(); });
+    zone.addEventListener('click',        function()  { input.click(); });
+    zone.addEventListener('dragover',     function(e) { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave',    function()  { zone.classList.remove('drag-over'); });
+    zone.addEventListener('drop',         function(e) {
+      e.preventDefault(); zone.classList.remove('drag-over');
+      if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]);
+    });
+    input.addEventListener('change', function() { if (input.files[0]) setFile(input.files[0]); });
+  }
+
+  function setFile(file) {
+    selectedFile = file;
+    document.getElementById('fname').textContent = file.name;
+    document.getElementById('fsize').textContent = fmtSize(file.size);
+    document.getElementById('file-row').classList.remove('hidden');
+    document.getElementById('err-box').classList.add('hidden');
   }
 
   function fmtSize(b) {
-    return b < 1024 * 1024 ? (b / 1024).toFixed(1) + ' KB' : (b / 1024 / 1024).toFixed(1) + ' MB'
+    return b < 1048576 ? (b / 1024).toFixed(1) + ' KB' : (b / 1048576).toFixed(1) + ' MB';
   }
 
-  async function analyze() {
-    if (!selectedFile) return
+  function submitFile() {
+    if (!selectedFile) return;
+    var maxMB = currentCat === 'fashion' ? 20 : 50;
+    if (selectedFile.size > maxMB * 1048576) { showErr('File too large. Max ' + maxMB + ' MB.'); return; }
+    var form = new FormData();
+    form.append('category', currentCat);
+    form.append('file', selectedFile);
+    doRequest(form);
+  }
 
-    if (selectedFile.size > 50 * 1024 * 1024) {
-      showErr('File too large. Please choose a song under 50 MB.')
-      return
-    }
-
-    showState('loading')
-
-    const form = new FormData()
-    form.append('song', selectedFile)
-
+  async function doRequest(form) {
+    showState('loading');
     try {
-      const res  = await fetch('/api/analyze', { method: 'POST', body: form })
-      const data = await res.json()
-
-      if (!res.ok || data.error) {
-        showState('upload')
-        showErr(data.error || 'Something went wrong. Please try again.')
-        return
-      }
-
-      renderResults(data)
-    } catch {
-      showState('upload')
-      showErr('Network error. Please check your connection and try again.')
+      var res  = await fetch('/api/recommend', { method: 'POST', body: form });
+      var data = await res.json();
+      if (!res.ok || data.error) { showState('upload'); showErr(data.error || 'Something went wrong.'); return; }
+      renderResults(data);
+    } catch(e) {
+      showState('upload');
+      showErr('Network error. Please try again.');
     }
-  }
-
-  function showState(state) {
-    document.getElementById('upload-section').classList.toggle('hidden', state !== 'upload')
-    document.getElementById('loading-section').classList.toggle('hidden', state !== 'loading')
-    document.getElementById('results-section').classList.toggle('hidden', state !== 'results')
-  }
-
-  function showErr(msg) {
-    document.getElementById('err-text').textContent = msg
-    document.getElementById('err-box').classList.remove('hidden')
   }
 
   function renderResults(data) {
-    document.getElementById('r-title').textContent  = data.detected?.title  || selectedFile.name
-    document.getElementById('r-artist').textContent = data.detected?.artist || 'Unknown Artist'
+    var det     = data.detected || {};
+    var title   = det.title   || '';
+    var creator = det.creator || '';
 
-    const list = document.getElementById('rec-list')
-    list.innerHTML = ''
+    document.getElementById('r-verb').textContent    = CATS[currentCat].verb;
+    document.getElementById('r-title').textContent   = title;
+    document.getElementById('r-creator').textContent = creator;
+    document.getElementById('r-sep').style.display   = creator ? '' : 'none';
 
-    ;(data.recommendations || []).forEach((rec, i) => {
-      const q = encodeURIComponent(`${rec.title} ${rec.artist}`)
-      const card = document.createElement('div')
-      card.className = 'rec-card'
-      card.style.animationDelay = `${i * 0.07}s`
-      card.innerHTML = `
-        <div class="rec-num">${i + 1}</div>
-        <div class="rec-body">
-          <div class="rec-title">${esc(rec.title)}</div>
-          <div class="rec-meta">
-            <span class="rec-artist">${esc(rec.artist)}</span>
-            ${rec.year ? `<span class="rec-year">${esc(rec.year)}</span>` : ''}
-          </div>
-          <div class="rec-reason">"${esc(rec.reason)}"</div>
-        </div>
-        <div class="rec-links">
-          <a class="link-btn btn-sp" href="https://open.spotify.com/search/${q}" target="_blank" rel="noopener">♪ Spotify</a>
-          <a class="link-btn btn-yt" href="https://www.youtube.com/results?search_query=${q}" target="_blank" rel="noopener">▶ YouTube</a>
-        </div>
-      `
-      list.appendChild(card)
-    })
+    var list      = document.getElementById('rec-list');
+    var isFashion = (currentCat === 'fashion');
+    list.innerHTML = '';
 
-    showState('results')
+    (data.recommendations || []).forEach(function(rec, i) {
+      var links = makeLinks(currentCat, rec.title, rec.creator);
+      var item  = document.createElement('div');
+      item.className = 'rec-item';
+      item.style.animationDelay = (i * 0.06) + 's';
+
+      // Byline
+      var byline = rec.creator ? '<strong>' + esc(rec.creator) + '</strong>' : '';
+      if (!isFashion && rec.year) byline += (byline ? ' &nbsp;&middot;&nbsp; ' : '') + esc(rec.year);
+      if (isFashion && rec.price_range) byline += (byline ? ' &nbsp;&middot;&nbsp; ' : '') + '<span class="rec-price">' + esc(rec.price_range) + '</span>';
+
+      // Links
+      var linkHtml = links.map(function(l) {
+        return '<a class="rec-link" href="' + l[1] + '" target="_blank" rel="noopener">' + l[0] + '</a>';
+      }).join('');
+
+      // Image (fashion only)
+      var imageHtml = '';
+      if (isFashion) {
+        var seed = (i + 1) * 313 + rec.title.length * 17;
+        var kw   = encodeURIComponent(rec.title + ' ' + (rec.creator || '') + ' fashion clothing');
+        imageHtml = '<div class="fashion-img-wrap">' +
+          '<img class="fashion-img" loading="lazy" alt="' + esc(rec.title) + '" ' +
+          'src="https://loremflickr.com/640/426/' + kw + '?lock=' + seed + '" ' +
+          'onerror="this.closest(\'.fashion-img-wrap\').style.display=\'none\'"></div>';
+      }
+
+      item.innerHTML =
+        (isFashion ? imageHtml : '') +
+        '<div class="rec-n">0' + (i + 1) + '</div>' +
+        '<div class="rec-body">' +
+          '<div class="rec-title">' + esc(rec.title) + '</div>' +
+          (byline ? '<div class="rec-byline">' + byline + '</div>' : '') +
+          '<div class="rec-reason">' + esc(rec.reason) + '</div>' +
+          '<div class="rec-links">' + linkHtml + '</div>' +
+        '</div>';
+
+      list.appendChild(item);
+    });
+
+    showState('results');
   }
 
-  function reset() {
-    selectedFile = null
-    fileInput.value = ''
-    document.getElementById('file-row').classList.add('hidden')
-    document.getElementById('err-box').classList.add('hidden')
-    showState('upload')
+  function makeLinks(cat, title, creator) {
+    var tq   = encodeURIComponent(title || '');
+    var full = encodeURIComponent(creator ? title + ' ' + creator : title);
+    if (cat === 'music')   return [['Spotify', 'https://open.spotify.com/search/' + full], ['YouTube', 'https://www.youtube.com/results?search_query=' + full]];
+    if (cat === 'book')    return [['Goodreads', 'https://www.goodreads.com/search?q=' + full], ['Open Library', 'https://openlibrary.org/search?q=' + full]];
+    if (cat === 'tv')      return [['IMDb', 'https://www.imdb.com/find?q=' + tq], ['JustWatch', 'https://www.justwatch.com/us/search?q=' + tq]];
+    if (cat === 'film')    return [['IMDb', 'https://www.imdb.com/find?q=' + tq], ['Letterboxd', 'https://letterboxd.com/search/' + tq + '/']];
+    if (cat === 'fashion') return [['Shop', 'https://www.google.com/search?tbm=shop&q=' + full], ['Pinterest', 'https://www.pinterest.com/search/pins/?q=' + full], ['Images', 'https://www.google.com/search?tbm=isch&q=' + full]];
+    return [];
+  }
+
+  function showState(s) {
+    document.getElementById('upload-section').classList.toggle('hidden',  s !== 'upload');
+    document.getElementById('loading-section').classList.toggle('hidden', s !== 'loading');
+    document.getElementById('results-section').classList.toggle('hidden', s !== 'results');
+  }
+
+  function showErr(msg) {
+    document.getElementById('err-text').textContent = msg;
+    document.getElementById('err-box').classList.remove('hidden');
+  }
+
+  function reset(keepInputs) {
+    selectedFile = null;
+    document.getElementById('music-file').value   = '';
+    document.getElementById('fashion-file').value = '';
+    document.getElementById('file-row').classList.add('hidden');
+    document.getElementById('err-box').classList.add('hidden');
+    if (!keepInputs) {
+      document.getElementById('title-input').value   = '';
+      document.getElementById('creator-input').value = '';
+    }
+    showState('upload');
   }
 
   function esc(s) {
-    return String(s)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
+    return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 </script>
 </body>
