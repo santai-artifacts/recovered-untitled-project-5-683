@@ -10,29 +10,29 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #f5f2ed;
-      --text: #1a1714;
-      --muted: #7a7060;
-      --border: #d4cec4;
-      --accent: #a63228;
-      --surface: #edeae3;
+      --bg: #ffffff;
+      --text: #0a0a0a;
+      --muted: #888888;
+      --border: #d8d8d8;
+      --accent: #0a0a0a;
+      --surface: #efefef;
     }
 
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
 
-    header { padding: 28px 40px 20px; border-bottom: 1px solid var(--border); }
-    .site-name { font-family: 'Playfair Display', Georgia, serif; font-size: 21px; font-weight: 400; color: var(--text); text-decoration: none; }
+    header { padding: 36px 40px 32px; border-bottom: none; }
+    .site-name { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--text); text-decoration: none; }
 
-    main { width: 100%; max-width: 620px; margin: 0 auto; padding: 52px 40px 100px; flex: 1; }
+    main { width: 100%; max-width: 620px; margin: 0 auto; padding: 40px 40px 100px; flex: 1; }
 
-    .cats { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 48px; flex-wrap: wrap; }
-    .cat-btn { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); cursor: pointer; background: none; border: none; border-bottom: 2px solid transparent; padding: 0 0 14px; margin-bottom: -1px; margin-right: 28px; transition: color 0.15s, border-color 0.15s; }
+    .cats { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 52px; flex-wrap: wrap; }
+    .cat-btn { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); cursor: pointer; background: none; border: none; border-bottom: 1px solid transparent; padding: 0 0 14px; margin-bottom: -1px; margin-right: 28px; transition: color 0.15s, border-color 0.15s; }
     .cat-btn:hover { color: var(--text); }
-    .cat-btn.active { color: var(--text); border-bottom-color: var(--accent); font-weight: 500; }
+    .cat-btn.active { color: var(--text); border-bottom-color: var(--text); font-weight: 600; }
 
-    .hero { margin-bottom: 36px; }
-    .hero h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(32px, 5vw, 50px); font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; }
-    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero { margin-bottom: 40px; }
+    .hero h1 { font-family: 'Inter', sans-serif; font-size: clamp(28px, 5vw, 42px); font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; text-transform: uppercase; }
+    .hero h1 em { font-style: normal; font-weight: 300; }
 
     /* Shared form elements */
     .form-label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; margin-bottom: 8px; }
@@ -52,21 +52,21 @@
 
     /* Loading */
     .loading { padding: 72px 0; }
-    .loading-text { font-family: 'Playfair Display', Georgia, serif; font-size: 22px; font-style: italic; }
+    .loading-text { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
     .loading-dots::after { content: ''; animation: dots 1.4s steps(4, end) infinite; }
     @keyframes dots { 0%{content:''} 25%{content:'.'} 50%{content:'..'} 75%{content:'...'} }
 
     /* Results */
     .results { animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-    .results-meta { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
-    .results-based { font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 400; margin-bottom: 40px; line-height: 1.4; }
-    .results-based em { font-style: italic; color: var(--accent); }
+    .results-meta { font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 6px; font-weight: 500; }
+    .results-based { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 400; letter-spacing: 0.04em; margin-bottom: 40px; line-height: 1.5; color: var(--muted); text-transform: uppercase; }
+    .results-based em { font-style: normal; font-weight: 600; color: var(--text); }
     .rec-list { margin-bottom: 48px; }
     .rec-item { padding: 22px 0; border-top: 1px solid var(--border); display: grid; grid-template-columns: 24px 1fr; gap: 16px; align-items: start; animation: fadeIn 0.3s ease backwards; }
     .rec-item:last-child { border-bottom: 1px solid var(--border); }
     .rec-n { font-size: 11px; color: var(--muted); padding-top: 4px; font-family: 'DM Mono', monospace; }
-    .rec-title { font-family: 'Playfair Display', Georgia, serif; font-size: 19px; font-weight: 400; line-height: 1.2; margin-bottom: 4px; }
+    .rec-title { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 4px; text-transform: uppercase; }
     .rec-byline { font-size: 12px; color: var(--muted); margin-bottom: 10px; font-weight: 300; }
     .rec-byline strong { color: var(--text); font-weight: 500; }
     .rec-reason { font-size: 13px; color: var(--muted); font-style: italic; line-height: 1.65; margin-bottom: 10px; font-weight: 300; }
@@ -207,10 +207,10 @@
 <main>
   <nav class="cats">
     <button class="cat-btn active" data-cat="music">Music</button>
-    <button class="cat-btn" data-cat="book">Books</button>
-    <button class="cat-btn" data-cat="tv">TV</button>
-    <button class="cat-btn" data-cat="film">Film</button>
     <button class="cat-btn" data-cat="fashion">Fashion</button>
+    <button class="cat-btn" data-cat="film">Film</button>
+    <button class="cat-btn" data-cat="tv">TV</button>
+    <button class="cat-btn" data-cat="book">Books</button>
   </nav>
 
   <div class="hero">
@@ -316,11 +316,11 @@
   var selectedFile = null;
 
   var CATS = {
-    music:   { headline: "A song you love.<br><em>Five you haven't heard.</em>",  verb: 'Listening to', input: 'music' },
-    book:    { headline: 'A book you loved.<br><em>Five to read next.</em>',       verb: 'Reading',      input: 'text', titleLabel: 'Title',      creatorLabel: 'Author',   showCreator: true,  frame: 'book' },
-    tv:      { headline: 'A show you finished.<br><em>Five to start next.</em>',   verb: 'Watching',     input: 'text', titleLabel: 'Show title', creatorLabel: 'Creator',  showCreator: true,  frame: 'tv' },
-    film:    { headline: 'A film you loved.<br><em>Five to watch next.</em>',      verb: 'Watching',     input: 'text', titleLabel: 'Title',      creatorLabel: 'Director', showCreator: true,  frame: 'ticket' },
-    fashion: { headline: 'A piece you wear.<br><em>Five to add to it.</em>',       verb: 'Inspired by',  input: 'fashion' }
+    music:   { headline: 'A song you love.<br><em>Five you haven\'t heard.</em>',  verb: 'Listening to', input: 'music' },
+    fashion: { headline: 'A piece you wear.<br><em>Five to add to it.</em>',        verb: 'Inspired by',  input: 'fashion' },
+    film:    { headline: 'A film you loved.<br><em>Five to watch next.</em>',       verb: 'Watching',     input: 'text', titleLabel: 'Title',      creatorLabel: 'Director', showCreator: true,  frame: 'ticket' },
+    tv:      { headline: 'A show you finished.<br><em>Five to start next.</em>',    verb: 'Watching',     input: 'text', titleLabel: 'Show title', creatorLabel: 'Creator',  showCreator: true,  frame: 'tv' },
+    book:    { headline: 'A book you loved.<br><em>Five to read next.</em>',        verb: 'Reading',      input: 'text', titleLabel: 'Title',      creatorLabel: 'Author',   showCreator: true,  frame: 'book' }
   };
 
   function formFields(cfg) {
