@@ -436,7 +436,7 @@ const html = `<!DOCTYPE html>
   var selectedFile = null;
 
   var CATS = {
-    music:   { headline: 'A song you love.<br><em>Five you haven\'t heard.</em>',   verb: 'Listening to',  input: 'music' },
+    music:   { headline: "A song you love.<br><em>Five you haven't heard.</em>",   verb: 'Listening to',  input: 'music' },
     book:    { headline: 'A book you loved.<br><em>Five to read next.</em>',         verb: 'Reading',       input: 'text', titleLabel: 'Title', creatorLabel: 'Author', showCreator: true },
     tv:      { headline: 'A show you finished.<br><em>Five to start next.</em>',     verb: 'Watching',      input: 'text', titleLabel: 'Show title', showCreator: false },
     film:    { headline: 'A film you loved.<br><em>Five to watch next.</em>',        verb: 'Watching',      input: 'text', titleLabel: 'Title', creatorLabel: 'Director', showCreator: true },

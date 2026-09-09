@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "bun run index.ts"
+    "start": "bun --watch run index.ts"
   },
   "description": "Multi-category recommendation app",
   "dependencies": {
