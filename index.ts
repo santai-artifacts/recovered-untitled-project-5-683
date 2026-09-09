@@ -475,8 +475,10 @@ const html = `<!DOCTYPE html>
     }
   }
 
-  document.querySelectorAll('.cat-btn').forEach(function(btn) {
-    btn.addEventListener('click', function(e) { switchCat(e.target.dataset.cat); });
+  document.querySelector('.cats').addEventListener('click', function(e) {
+    if (e.target.classList.contains('cat-btn')) {
+      switchCat(e.target.dataset.cat);
+    }
   });
 
   // Music drop zone
