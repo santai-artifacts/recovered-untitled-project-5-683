@@ -476,7 +476,7 @@ const html = `<!DOCTYPE html>
   }
 
   document.querySelectorAll('.cat-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() { switchCat(btn.dataset.cat); });
+    btn.addEventListener('click', function(e) { switchCat(e.target.dataset.cat); });
   });
 
   // Music drop zone
