@@ -133,20 +133,23 @@
     /* ═══════════════════════════════════════
        TV — CRT television
        ═══════════════════════════════════════ */
-    .crt-tv { background: #282828; border-radius: 18px 18px 14px 14px; padding: 18px 18px 14px; box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 2px 0 rgba(255,255,255,0.05), 0 0 0 1px #1c1c1c; }
-    .tv-screen { background: #07111e; border-radius: 8px; padding: 32px 36px 28px; position: relative; overflow: hidden; background-image: repeating-linear-gradient(0deg, transparent 0px, transparent 3px, rgba(255,255,255,0.009) 3px, rgba(255,255,255,0.009) 4px); box-shadow: inset 0 0 40px rgba(0,0,0,0.5), 0 0 0 1px #000; }
-    .tv-screen::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 25%, rgba(60,180,255,0.07) 0%, transparent 65%); pointer-events: none; }
+    .tv-wrap { display: flex; flex-direction: column; align-items: center; }
+    .tv-antenna { display: block; width: 160px; margin-bottom: -2px; }
+    .crt-tv { background: #333; border-radius: 20px 20px 14px 14px; padding: 20px 24px 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.45), inset 0 2px 0 rgba(255,255,255,0.07), inset 0 -2px 0 rgba(0,0,0,0.2), 0 0 0 1px #1e1e1e; width: 100%; }
+    .tv-screen { background: #111; border-radius: 10px; padding: 28px 32px 24px; position: relative; overflow: hidden; background-image: repeating-linear-gradient(0deg, transparent 0px, transparent 3px, rgba(255,255,255,0.012) 3px, rgba(255,255,255,0.012) 4px); box-shadow: inset 0 0 60px rgba(0,0,0,0.6), 0 0 0 2px #000; }
+    .tv-screen::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.04) 0%, transparent 70%); pointer-events: none; }
     .tv-screen-content { position: relative; z-index: 1; }
-    .tv-channel { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(80,195,255,0.55); margin-bottom: 22px; }
-    .tv-screen .form-label { color: rgba(140,220,255,0.75); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; }
-    .tv-screen .form-input { color: #c8f0ff; border-bottom-color: rgba(140,220,255,0.35); font-size: 20px; caret-color: #c8f0ff; }
+    .tv-channel { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 22px; }
+    .tv-screen .form-label { color: rgba(255,255,255,0.6); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; }
+    .tv-screen .form-input { color: #ffffff; border-bottom-color: rgba(255,255,255,0.3); font-size: 20px; caret-color: #fff; }
+    .tv-screen .form-input::placeholder { color: rgba(255,255,255,0.25); }
     .tv-field { margin-bottom: 22px; }
-    .tv-submit { background: rgba(140,220,255,0.15); color: #c8f0ff; border: 1px solid rgba(140,220,255,0.45); font-family: 'DM Mono', monospace; border-radius: 2px; padding: 8px 20px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.15s; }
-    .tv-submit:hover { background: rgba(140,220,255,0.28); border-color: rgba(140,220,255,0.7); }
-    .tv-base { display: flex; align-items: center; justify-content: space-between; padding: 10px 8px 2px; }
-    .tv-knobs { display: flex; gap: 6px; }
-    .tv-knob { width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #555, #1a1a1a); border: 1px solid #0a0a0a; }
-    .tv-brand-tag { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.1em; color: rgba(255,255,255,0.12); }
+    .tv-submit { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.35); font-family: 'DM Mono', monospace; border-radius: 2px; padding: 8px 20px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.15s; }
+    .tv-submit:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.6); }
+    .tv-base { display: flex; align-items: center; justify-content: space-between; padding: 12px 6px 2px; }
+    .tv-knobs { display: flex; gap: 8px; }
+    .tv-knob { width: 12px; height: 12px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #666, #1a1a1a); border: 1px solid #0a0a0a; box-shadow: 0 1px 3px rgba(0,0,0,0.4); }
+    .tv-brand-tag { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.1em; color: rgba(255,255,255,0.18); }
 
 
     /* ═══════════════════════════════════════
@@ -374,17 +377,24 @@
     } else if (cfg.frame === 'tv') {
       cfg.fldClass = 'tv-field';
       outer.innerHTML =
-        '<div class="crt-tv">' +
-          '<div class="tv-screen">' +
-            '<div class="tv-screen-content">' +
-              '<div class="tv-channel">Ch. 5 &mdash; Likewise</div>' +
-              formFields(cfg) +
-              '<button type="submit" form="text-form" class="tv-submit">Find matches</button>' +
+        '<div class="tv-wrap">' +
+          '<svg class="tv-antenna" viewBox="0 0 160 52" xmlns="http://www.w3.org/2000/svg">' +
+            '<line x1="80" y1="50" x2="28" y2="6" stroke="#555" stroke-width="2" stroke-linecap="round"/>' +
+            '<line x1="80" y1="50" x2="132" y2="6" stroke="#555" stroke-width="2" stroke-linecap="round"/>' +
+            '<circle cx="80" cy="50" r="3.5" fill="#444"/>' +
+          '</svg>' +
+          '<div class="crt-tv">' +
+            '<div class="tv-screen">' +
+              '<div class="tv-screen-content">' +
+                '<div class="tv-channel">Ch. 5 &mdash; Likewise</div>' +
+                formFields(cfg) +
+                '<button type="submit" form="text-form" class="tv-submit">Find matches</button>' +
+              '</div>' +
             '</div>' +
-          '</div>' +
-          '<div class="tv-base">' +
-            '<div class="tv-knobs"><div class="tv-knob"></div><div class="tv-knob"></div></div>' +
-            '<div class="tv-brand-tag">LIKEWISE</div>' +
+            '<div class="tv-base">' +
+              '<div class="tv-knobs"><div class="tv-knob"></div><div class="tv-knob"></div></div>' +
+              '<div class="tv-brand-tag">LIKEWISE</div>' +
+            '</div>' +
           '</div>' +
         '</div>';
 
