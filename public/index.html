@@ -15,793 +15,186 @@
       --muted: #7a7060;
       --border: #d4cec4;
       --accent: #a63228;
-      --accent-bg: #f9efee;
       --surface: #edeae3;
     }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
 
-    /* ── Header ── */
-    header {
-      padding: 28px 40px 20px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: baseline;
-      gap: 20px;
-    }
+    header { padding: 28px 40px 20px; border-bottom: 1px solid var(--border); }
+    .site-name { font-family: 'Playfair Display', Georgia, serif; font-size: 21px; font-weight: 400; color: var(--text); text-decoration: none; }
 
-    .site-name {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 21px;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      color: var(--text);
-      text-decoration: none;
-    }
+    main { width: 100%; max-width: 620px; margin: 0 auto; padding: 52px 40px 100px; flex: 1; }
 
-    /* ── Main layout ── */
-    main {
-      width: 100%;
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 52px 40px 100px;
-      flex: 1;
-    }
-
-    /* ── Category nav ── */
-    .cats {
-      display: flex;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 48px;
-      flex-wrap: wrap;
-    }
-
-    .cat-btn {
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      cursor: pointer;
-      background: none;
-      border: none;
-      border-bottom: 2px solid transparent;
-      padding: 0 0 14px;
-      margin-bottom: -1px;
-      margin-right: 28px;
-      transition: color 0.15s, border-color 0.15s;
-    }
-
+    .cats { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 48px; flex-wrap: wrap; }
+    .cat-btn { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); cursor: pointer; background: none; border: none; border-bottom: 2px solid transparent; padding: 0 0 14px; margin-bottom: -1px; margin-right: 28px; transition: color 0.15s, border-color 0.15s; }
     .cat-btn:hover { color: var(--text); }
     .cat-btn.active { color: var(--text); border-bottom-color: var(--accent); font-weight: 500; }
 
-    /* ── Hero ── */
     .hero { margin-bottom: 36px; }
-
-    .hero h1 {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(32px, 5vw, 50px);
-      font-weight: 400;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-    }
-
+    .hero h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(32px, 5vw, 50px); font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; }
     .hero h1 em { font-style: italic; color: var(--accent); }
 
-    /* ── Shared form elements ── */
-    .form-label {
-      display: block;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-weight: 500;
-      margin-bottom: 8px;
-    }
-
-    .form-input {
-      width: 100%;
-      border: none;
-      border-bottom: 1px solid currentColor;
-      background: transparent;
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 20px;
-      font-style: italic;
-      padding: 4px 0 10px;
-      outline: none;
-      transition: opacity 0.15s;
-      -webkit-appearance: none;
-      display: block;
-    }
-
-    .form-input::placeholder { opacity: 0.4; font-style: italic; }
-
-    .pick-btn {
-      display: inline-block;
-      padding: 9px 22px;
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      border: none;
-      border-radius: 2px;
-      cursor: pointer;
-      transition: opacity 0.15s;
-    }
-
+    /* Shared form elements */
+    .form-label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; margin-bottom: 8px; }
+    .form-input { width: 100%; border: none; border-bottom: 1px solid currentColor; background: transparent; font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-style: italic; padding: 4px 0 10px; outline: none; transition: opacity 0.15s; -webkit-appearance: none; display: block; }
+    .form-input::placeholder { opacity: 0.35; font-style: italic; }
+    .pick-btn { display: inline-block; padding: 9px 22px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; border: none; border-radius: 2px; cursor: pointer; transition: opacity 0.15s; }
     .pick-btn:hover { opacity: 0.8; }
 
-    /* ── File-selected row ── */
-    .file-row {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 16px 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      margin-top: 20px;
-    }
-
+    /* File row */
+    .file-row { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-top: 20px; }
     .file-info { flex: 1; min-width: 0; }
     .file-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .file-size { font-size: 11px; color: var(--muted); margin-top: 2px; }
-
-    .go-btn {
-      padding: 9px 20px;
-      background: var(--accent);
-      color: #fff;
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      border: none;
-      border-radius: 2px;
-      cursor: pointer;
-      white-space: nowrap;
-      flex-shrink: 0;
-      transition: opacity 0.15s;
-    }
-
+    .go-btn { padding: 9px 20px; background: var(--accent); color: #fff; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; border: none; border-radius: 2px; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: opacity 0.15s; }
     .go-btn:hover { opacity: 0.85; }
+    .error-box { margin-top: 16px; padding: 12px 16px; background: #f9efee; border-left: 3px solid var(--accent); font-size: 13px; color: var(--accent); }
 
-    .error-box {
-      margin-top: 16px;
-      padding: 12px 16px;
-      background: var(--accent-bg);
-      border-left: 3px solid var(--accent);
-      font-size: 13px;
-      color: var(--accent);
-    }
-
-    /* ── Loading ── */
+    /* Loading */
     .loading { padding: 72px 0; }
+    .loading-text { font-family: 'Playfair Display', Georgia, serif; font-size: 22px; font-style: italic; }
+    .loading-dots::after { content: ''; animation: dots 1.4s steps(4, end) infinite; }
+    @keyframes dots { 0%{content:''} 25%{content:'.'} 50%{content:'..'} 75%{content:'...'} }
 
-    .loading-text {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 22px;
-      font-style: italic;
-    }
-
-    .loading-dots::after {
-      content: '';
-      animation: dots 1.4s steps(4, end) infinite;
-    }
-
-    @keyframes dots {
-      0%  { content: ''; }  25% { content: '.'; }
-      50% { content: '..'; } 75% { content: '...'; }
-    }
-
-    /* ── Results ── */
+    /* Results */
     .results { animation: fadeIn 0.3s ease; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-    .results-meta {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .results-based {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 20px;
-      font-weight: 400;
-      margin-bottom: 40px;
-      line-height: 1.4;
-    }
-
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .results-meta { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+    .results-based { font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 400; margin-bottom: 40px; line-height: 1.4; }
     .results-based em { font-style: italic; color: var(--accent); }
-
     .rec-list { margin-bottom: 48px; }
-
-    .rec-item {
-      padding: 22px 0;
-      border-top: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: 24px 1fr;
-      gap: 16px;
-      align-items: start;
-      animation: fadeIn 0.3s ease backwards;
-    }
-
+    .rec-item { padding: 22px 0; border-top: 1px solid var(--border); display: grid; grid-template-columns: 24px 1fr; gap: 16px; align-items: start; animation: fadeIn 0.3s ease backwards; }
     .rec-item:last-child { border-bottom: 1px solid var(--border); }
-
     .rec-n { font-size: 11px; color: var(--muted); padding-top: 4px; font-family: 'DM Mono', monospace; }
-
-    .rec-title {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 19px;
-      font-weight: 400;
-      line-height: 1.2;
-      margin-bottom: 4px;
-    }
-
+    .rec-title { font-family: 'Playfair Display', Georgia, serif; font-size: 19px; font-weight: 400; line-height: 1.2; margin-bottom: 4px; }
     .rec-byline { font-size: 12px; color: var(--muted); margin-bottom: 10px; font-weight: 300; }
     .rec-byline strong { color: var(--text); font-weight: 500; }
-
     .rec-reason { font-size: 13px; color: var(--muted); font-style: italic; line-height: 1.65; margin-bottom: 10px; font-weight: 300; }
-
     .rec-links { display: flex; gap: 14px; flex-wrap: wrap; }
-
-    .rec-link {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 500;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.15s;
-      padding-bottom: 1px;
-    }
-
+    .rec-link { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); text-decoration: none; font-weight: 500; border-bottom: 1px solid transparent; transition: border-color 0.15s; padding-bottom: 1px; }
     .rec-link:hover { border-color: var(--accent); }
-
-    .rec-price {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--accent);
-    }
-
-    /* Fashion image */
-    .fashion-img-wrap {
-      grid-column: 1 / -1;
-      border-radius: 2px;
-      overflow: hidden;
-      background: var(--surface);
-      aspect-ratio: 16/9;
-      margin-bottom: -4px;
-    }
-
+    .rec-price { font-size: 11px; font-weight: 600; color: var(--accent); }
+    .fashion-img-wrap { grid-column: 1/-1; border-radius: 2px; overflow: hidden; background: var(--surface); aspect-ratio: 16/9; margin-bottom: -4px; }
     .fashion-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-    .reset-link {
-      font-size: 13px;
-      color: var(--muted);
-      cursor: pointer;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      background: none;
-      border: none;
-      font-family: inherit;
-      transition: color 0.15s;
-      padding: 0;
-    }
-
+    .reset-link { font-size: 13px; color: var(--muted); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; background: none; border: none; font-family: inherit; transition: color 0.15s; padding: 0; }
     .reset-link:hover { color: var(--text); }
-
     .hidden { display: none !important; }
 
 
-    /* ════════════════════════════════════════
-       PHYSICAL MEDIA FRAMES
-       ════════════════════════════════════════ */
+    /* ═══════════════════════════════════════
+       MUSIC — Vinyl record + inner-sleeve form
+       ═══════════════════════════════════════ */
+    .vinyl-case { background: #14141a; border-radius: 6px; padding: 28px 24px; box-shadow: 0 8px 40px rgba(0,0,0,0.55), 0 0 0 1px #28282e; }
+    .vinyl-record-wrap { display: flex; justify-content: center; margin-bottom: 20px; }
+    .vinyl-record { width: 210px; height: 210px; border-radius: 50%; background: #0a0a0a; background-image: repeating-radial-gradient(circle at center, transparent 0px, transparent 4px, rgba(255,255,255,0.02) 4px, rgba(255,255,255,0.02) 5px); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.04); position: relative; cursor: pointer; transition: transform 0.4s ease; }
+    .vinyl-record.drag-over, .vinyl-record:hover { transform: rotate(8deg); }
+    .vinyl-center-label { width: 76px; height: 76px; border-radius: 50%; background: #d4a84a; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; box-shadow: 0 0 12px rgba(0,0,0,0.5); flex-shrink: 0; }
+    .vinyl-label-brand { font-family: 'Playfair Display', serif; font-size: 6.5px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(0,0,0,0.5); }
+    .vinyl-spindle { width: 7px; height: 7px; border-radius: 50%; background: #111; box-shadow: 0 0 0 2px rgba(255,255,255,0.1); }
+    .vinyl-tabs { display: flex; justify-content: center; gap: 20px; margin-bottom: 18px; }
+    .vinyl-tab { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; background: none; border: none; color: rgba(255,255,255,0.3); cursor: pointer; padding: 3px 0; border-bottom: 1px solid transparent; transition: all 0.15s; }
+    .vinyl-tab.active { color: rgba(255,255,255,0.8); border-bottom-color: rgba(255,255,255,0.3); }
+    .vinyl-sleeve { background: #f0ead8; border-radius: 3px; padding: 22px 24px 20px; }
+    .vinyl-sleeve-hdr { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(80,65,40,0.4); margin-bottom: 18px; }
+    .vinyl-sleeve .form-label { color: rgba(80,65,40,0.6); }
+    .vinyl-sleeve .form-input { color: #1a1005; border-bottom-color: rgba(80,65,40,0.2); }
+    .vinyl-sleeve-field { margin-bottom: 20px; }
+    .vinyl-sleeve .pick-btn { background: #14141a; color: rgba(255,255,255,0.88); }
+    .vinyl-upload-panel { text-align: center; padding: 4px 0 0; }
+    .vinyl-upload-text { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 12px; }
+    .vinyl-browse-btn { background: none; border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.55); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 7px 18px; border-radius: 2px; cursor: pointer; transition: all 0.15s; }
+    .vinyl-browse-btn:hover { border-color: rgba(255,255,255,0.35); color: rgba(255,255,255,0.8); }
+    .vinyl-formats { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.15); margin-top: 10px; }
 
 
-    /* ── 1. CD JEWEL CASE (Music) ── */
-    .cd-case {
-      background: #0e1218;
-      border-radius: 6px;
-      padding: 24px 24px 28px;
-      box-shadow:
-        0 8px 40px rgba(0,0,0,0.55),
-        0 2px 8px rgba(0,0,0,0.3),
-        inset 0 1px 0 rgba(255,255,255,0.06),
-        0 0 0 1px #2c313d;
-    }
+    /* ═══════════════════════════════════════
+       BOOKS — Open book spread
+       ═══════════════════════════════════════ */
+    .open-book { display: grid; grid-template-columns: 1fr 10px 1fr; border-radius: 3px; box-shadow: 0 6px 28px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.06); overflow: hidden; position: relative; }
+    .open-book::after { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(0,0,0,0.06); pointer-events: none; }
+    .book-page-left { background: #ede8d2; padding: 36px 20px 40px 36px; background-image: repeating-linear-gradient(transparent 0px, transparent 27px, rgba(100,80,55,0.12) 27px, rgba(100,80,55,0.12) 28px); background-size: 100% 28px; background-position: 0 16px; min-height: 220px; }
+    .book-page-num { font-family: 'Playfair Display', serif; font-style: italic; font-size: 11px; color: rgba(100,80,55,0.3); text-align: center; margin-top: auto; padding-top: 12px; }
+    .book-spine { background: linear-gradient(90deg, #bfaa84 0%, #d6c49a 30%, #d0ba8e 55%, #d4c092 75%, #b8a278 100%); box-shadow: inset 2px 0 6px rgba(0,0,0,0.08), inset -2px 0 6px rgba(0,0,0,0.06); }
+    .book-page-right { background: #f3eedf; padding: 36px 36px 40px 20px; background-image: repeating-linear-gradient(transparent 0px, transparent 27px, rgba(100,80,55,0.1) 27px, rgba(100,80,55,0.1) 28px); background-size: 100% 28px; background-position: 0 16px; }
+    .book-page-right .form-label { color: rgba(90,65,35,0.65); }
+    .book-page-right .form-input { color: #1a1005; border-bottom-color: rgba(90,65,35,0.2); font-size: 19px; }
+    .book-field { margin-bottom: 24px; }
+    .book-page-right .pick-btn { background: #5c3d20; color: #f3eedf; }
+    .book-page-left-lines { display: flex; flex-direction: column; gap: 0; margin-top: 8px; }
 
-    /* Tab strip at top of case */
-    .cd-tabs {
-      display: flex;
-      gap: 4px;
-      margin-bottom: 20px;
-    }
 
-    .cd-tab {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      background: #1e2430;
-      color: rgba(255,255,255,0.35);
-      border: 1px solid #2c313d;
-      border-radius: 2px;
-      padding: 5px 12px;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
+    /* ═══════════════════════════════════════
+       TV — CRT television
+       ═══════════════════════════════════════ */
+    .crt-tv { background: #282828; border-radius: 18px 18px 14px 14px; padding: 18px 18px 14px; box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 2px 0 rgba(255,255,255,0.05), 0 0 0 1px #1c1c1c; }
+    .tv-screen { background: #07111e; border-radius: 8px; padding: 32px 36px 28px; position: relative; overflow: hidden; background-image: repeating-linear-gradient(0deg, transparent 0px, transparent 3px, rgba(255,255,255,0.009) 3px, rgba(255,255,255,0.009) 4px); box-shadow: inset 0 0 40px rgba(0,0,0,0.5), 0 0 0 1px #000; }
+    .tv-screen::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 25%, rgba(60,180,255,0.07) 0%, transparent 65%); pointer-events: none; }
+    .tv-screen-content { position: relative; z-index: 1; }
+    .tv-channel { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(80,195,255,0.35); margin-bottom: 22px; }
+    .tv-screen .form-label { color: rgba(80,200,255,0.5); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; }
+    .tv-screen .form-input { color: #8de4ff; border-bottom-color: rgba(80,200,255,0.18); font-size: 20px; caret-color: #8de4ff; }
+    .tv-field { margin-bottom: 22px; }
+    .tv-submit { background: rgba(80,200,255,0.1); color: #8de4ff; border: 1px solid rgba(80,200,255,0.2); font-family: 'DM Mono', monospace; border-radius: 2px; padding: 8px 20px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.15s; }
+    .tv-submit:hover { background: rgba(80,200,255,0.18); }
+    .tv-base { display: flex; align-items: center; justify-content: space-between; padding: 10px 8px 2px; }
+    .tv-knobs { display: flex; gap: 6px; }
+    .tv-knob { width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #555, #1a1a1a); border: 1px solid #0a0a0a; }
+    .tv-brand-tag { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.1em; color: rgba(255,255,255,0.12); }
 
-    .cd-tab.active {
-      background: #2c313d;
-      color: rgba(255,255,255,0.85);
-      border-color: #3d4455;
-    }
 
-    .cd-tab:hover:not(.active) { color: rgba(255,255,255,0.55); }
+    /* ═══════════════════════════════════════
+       FILM — Cinema ticket
+       ═══════════════════════════════════════ */
+    .ticket-wrap { position: relative; }
+    .ticket { background: #f0e8d0; border-radius: 3px; padding: 30px 36px 30px 62px; position: relative; box-shadow: 0 3px 16px rgba(0,0,0,0.14), 0 0 0 1px rgba(0,0,0,0.06); }
+    .ticket-stub { position: absolute; left: 0; top: 0; bottom: 0; width: 50px; background: #e6d8b4; border-radius: 3px 0 0 3px; display: flex; align-items: center; justify-content: center; }
+    .ticket-stub-text { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(0,0,0,0.28); writing-mode: vertical-rl; transform: rotate(180deg); }
+    .ticket::before { content: ''; position: absolute; left: 50px; top: 0; bottom: 0; border-left: 1.5px dashed rgba(0,0,0,0.15); }
+    .ticket-notch { position: absolute; left: 43px; width: 14px; height: 14px; background: var(--bg); border-radius: 50%; }
+    .ticket-notch.top { top: -7px; }
+    .ticket-notch.bot { bottom: -7px; }
+    .ticket-hdr { font-family: 'Playfair Display', serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(60,40,10,0.38); margin-bottom: 22px; display: flex; align-items: center; gap: 10px; }
+    .ticket-hdr::after { content: ''; flex: 1; height: 1px; background: rgba(60,40,10,0.1); }
+    .ticket .form-label { color: rgba(60,40,10,0.52); }
+    .ticket .form-input { color: #1a1005; border-bottom-color: rgba(60,40,10,0.16); }
+    .ticket-field { margin-bottom: 22px; }
+    .ticket .pick-btn { background: #2a1c08; color: #f0e8d0; }
 
-    /* CD disc as the visual center of upload panel */
-    .cd-upload-panel { text-align: center; }
 
-    .cd-disc-zone {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      margin: 8px auto 20px;
-      position: relative;
-      cursor: pointer;
-      background: conic-gradient(
-        from 0deg,
-        hsl(220,28%,70%) 0deg,   hsl(180,35%,76%) 36deg,
-        hsl(280,25%,72%) 72deg,  hsl(200,40%,74%) 108deg,
-        hsl(320,28%,74%) 144deg, hsl(60,28%,78%)  180deg,
-        hsl(140,30%,74%) 216deg, hsl(240,32%,72%) 252deg,
-        hsl(30,35%,76%)  288deg, hsl(260,28%,73%) 324deg,
-        hsl(220,28%,70%) 360deg
+    /* ═══════════════════════════════════════
+       FASHION — T-shirt on hanger
+       ═══════════════════════════════════════ */
+    .tshirt-container { display: flex; flex-direction: column; align-items: center; }
+    .hanger-svg { display: block; width: 200px; margin-bottom: -3px; z-index: 1; position: relative; }
+    .shirt-wrap { width: 100%; filter: drop-shadow(0 5px 20px rgba(0,0,0,0.13)); }
+    .shirt {
+      background: #f9f9f8;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.016) 2px, rgba(0,0,0,0.016) 3px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.016) 2px, rgba(0,0,0,0.016) 3px);
+      clip-path: polygon(
+        0% 20%,   22% 0%,   37% 0%,   43% 9%,
+        50% 12%,  57% 9%,   63% 0%,   78% 0%,
+        100% 20%, 100% 100%, 0% 100%
       );
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.12),
-        0 4px 24px rgba(0,0,0,0.6),
-        inset 0 0 40px rgba(0,0,0,0.08);
-      transition: transform 0.3s, box-shadow 0.3s;
+      padding: 52px 44px 36px;
+      min-height: 200px;
     }
+    .shirt-content { text-align: center; }
+    .shirt-drop-label { font-family: 'Playfair Display', serif; font-style: italic; font-size: 18px; color: rgba(0,0,0,0.38); margin-bottom: 6px; }
+    .shirt-drop-hint { font-size: 12px; color: rgba(0,0,0,0.28); margin-bottom: 20px; }
+    .shirt-pick-btn { background: #111; color: white; border: none; border-radius: 2px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 10px 24px; cursor: pointer; transition: opacity 0.15s; margin-bottom: 10px; }
+    .shirt-pick-btn:hover { opacity: 0.8; }
+    .shirt-formats { font-size: 9px; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(0,0,0,0.2); }
 
-    .cd-disc-zone:hover, .cd-disc-zone.drag-over {
-      transform: rotate(5deg) scale(1.03);
-      box-shadow: 0 0 0 2px rgba(255,255,255,0.2), 0 6px 32px rgba(0,0,0,0.7);
-    }
-
-    /* Center hole */
-    .cd-disc-zone::after {
-      content: '';
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 38px; height: 38px;
-      background: #0e1218;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 0 0 10px rgba(200,210,230,0.08);
-      pointer-events: none;
-    }
-
-    /* Drop prompt overlaid on disc */
-    .cd-disc-label {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      z-index: 1;
-    }
-
-    .cd-drop-text {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(10,12,16,0.65);
-      font-weight: 500;
-      pointer-events: none;
-      line-height: 1.6;
-    }
-
-    .cd-pick-btn {
-      background: rgba(10,12,16,0.5);
-      color: rgba(255,255,255,0.85);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 2px;
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 5px 12px;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-
-    .cd-pick-btn:hover { background: rgba(10,12,16,0.75); }
-
-    .cd-formats {
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.07em;
-      color: rgba(255,255,255,0.2);
-      text-transform: uppercase;
-      text-align: center;
-      margin-top: 4px;
-    }
-
-    /* Liner notes (text search panel) */
-    .cd-liner {
-      background: #f8f5ef;
-      border-radius: 3px;
-      padding: 28px 28px 24px;
-    }
-
-    .cd-liner .form-label { color: #5a5040; }
-    .cd-liner .form-input { color: #1a1410; border-bottom-color: rgba(90,80,64,0.25); }
-    .cd-liner .form-input::placeholder { color: rgba(90,80,64,0.4); }
-
-    .cd-liner-title {
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(90,80,64,0.45);
-      margin-bottom: 20px;
-    }
-
-    .cd-submit-btn {
-      background: #1a1a2a;
-      color: rgba(255,255,255,0.88);
-    }
-
-    /* Form field spacing inside liner */
-    .liner-field { margin-bottom: 24px; }
-
-
-    /* ── 2. RULED BOOK PAGE (Books) ── */
-    .frame-book {
-      background: #f3eedf;
-      background-image: repeating-linear-gradient(
-        transparent 0px, transparent 31px,
-        rgba(100,80,55,0.13) 31px, rgba(100,80,55,0.13) 32px
-      );
-      background-size: 100% 32px;
-      background-position: 0 22px;
-      border-radius: 0 4px 4px 0;
-      padding: 36px 44px 40px 60px;
-      position: relative;
-      box-shadow:
-        -8px 0 0 0 #5c3d20,
-        -12px 0 20px rgba(0,0,0,0.2),
-        4px 4px 16px rgba(0,0,0,0.1),
-        8px 8px 28px rgba(0,0,0,0.05),
-        0 0 0 1px rgba(0,0,0,0.05);
-    }
-
-    /* Red margin line */
-    .frame-book::after {
-      content: '';
-      position: absolute;
-      left: 52px; top: 0; bottom: 0;
-      width: 1px;
-      background: rgba(160,50,50,0.28);
-    }
-
-    .frame-book .form-label { color: rgba(92,62,32,0.7); }
-    .frame-book .form-input {
-      color: #1a1208;
-      border-bottom-color: rgba(92,62,32,0.2);
-      font-size: 21px;
-    }
-    .frame-book .form-input::placeholder { color: rgba(92,62,32,0.3); }
-
-    .frame-book .book-field { margin-bottom: 28px; }
-
-    .frame-book .pick-btn {
-      background: #5c3d20;
-      color: #f3eedf;
-    }
-
-    /* Page-stack shadow effect (right side) */
-    .frame-book-wrap {
-      position: relative;
-    }
-
-    .frame-book-wrap::after {
-      content: '';
-      position: absolute;
-      right: -5px; top: 4px; bottom: -4px;
-      width: 100%;
-      background: #e8e2cc;
-      z-index: -1;
-      border-radius: 0 4px 4px 0;
-      box-shadow: 4px 4px 16px rgba(0,0,0,0.08);
-    }
-
-    .frame-book-wrap::before {
-      content: '';
-      position: absolute;
-      right: -9px; top: 8px; bottom: -8px;
-      width: 100%;
-      background: #ddd7c0;
-      z-index: -2;
-      border-radius: 0 4px 4px 0;
-    }
-
-
-    /* ── 3. VHS CASSETTE (TV) ── */
-    .frame-vhs {
-      background: #1e1e1e;
-      border-radius: 6px 6px 3px 3px;
-      padding: 16px 16px 20px;
-      box-shadow:
-        0 6px 28px rgba(0,0,0,0.5),
-        inset 0 1px 0 rgba(255,255,255,0.04),
-        0 0 0 1px #2a2a2a;
-    }
-
-    /* Cassette window */
-    .vhs-window {
-      background: #111;
-      border-radius: 4px 4px 0 0;
-      height: 28px;
-      margin: 0 12px 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      border: 1px solid #333;
-      border-bottom: none;
-    }
-
-    .vhs-reel {
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #3a3a3a 30%, #1a1a1a 31%, #1a1a1a 60%, #2a2a2a 61%);
-      border: 1px solid #444;
-      box-shadow: inset 0 0 0 4px #111;
-    }
-
-    .vhs-tape {
-      flex: 1;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, rgba(80,80,80,0.6), transparent);
-      margin: 0 4px;
-    }
-
-    /* VHS label (white sticker on the cassette) */
-    .vhs-label {
-      background: white;
-      padding: 22px 24px 20px;
-      margin: 0;
-      position: relative;
-    }
-
-    .vhs-label-title {
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(0,0,0,0.25);
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .vhs-label-title::after {
-      content: 'VHS  T-120';
-      font-size: 8px;
-      letter-spacing: 0.08em;
-    }
-
-    .vhs-label .form-label { color: rgba(0,0,0,0.45); }
-    .vhs-label .form-input { color: #111; border-bottom-color: rgba(0,0,0,0.15); font-size: 20px; }
-    .vhs-label .form-input::placeholder { color: rgba(0,0,0,0.25); }
-    .vhs-field { margin-bottom: 20px; }
-    .vhs-label .pick-btn { background: #111; color: white; }
-
-    .vhs-bottom {
-      background: #1e1e1e;
-      border-radius: 0 0 3px 3px;
-      height: 8px;
-    }
-
-
-    /* ── 4. CINEMA TICKET (Film) ── */
-    .frame-ticket-wrap { position: relative; }
-
-    .frame-ticket {
-      background: #f2e8d0;
-      border-radius: 3px;
-      padding: 32px 36px 32px 64px;
-      position: relative;
-      box-shadow:
-        0 3px 16px rgba(0,0,0,0.15),
-        0 1px 3px rgba(0,0,0,0.1),
-        0 0 0 1px rgba(0,0,0,0.06);
-    }
-
-    /* Perforated left stub */
-    .frame-ticket::before {
-      content: '';
-      position: absolute;
-      left: 48px; top: 0; bottom: 0;
-      border-left: 1.5px dashed rgba(0,0,0,0.18);
-    }
-
-    /* Stub strip */
-    .ticket-stub {
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 48px;
-      background: #e8d8b0;
-      border-radius: 3px 0 0 3px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .ticket-stub-text {
-      font-family: 'DM Mono', monospace;
-      font-size: 8px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(0,0,0,0.3);
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
-    }
-
-    .ticket-header {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(0,0,0,0.35);
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .ticket-header::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: rgba(0,0,0,0.1);
-    }
-
-    .ticket-field { margin-bottom: 24px; }
-    .frame-ticket .form-label { color: rgba(60,40,10,0.55); }
-    .frame-ticket .form-input { color: #1a1005; border-bottom-color: rgba(60,40,10,0.18); }
-    .frame-ticket .form-input::placeholder { color: rgba(60,40,10,0.3); }
-    .frame-ticket .pick-btn { background: #2a1c08; color: #f2e8d0; }
-
-    /* Semi-circular notches on edges of stub line */
-    .ticket-notch-top, .ticket-notch-bottom {
-      position: absolute;
-      left: 40px;
-      width: 16px; height: 16px;
-      background: var(--bg);
-      border-radius: 50%;
-      border: 1px solid rgba(0,0,0,0.06);
-    }
-    .ticket-notch-top { top: -8px; }
-    .ticket-notch-bottom { bottom: -8px; }
-
-
-    /* ── 5. CLOTHING HANG TAG (Fashion) ── */
-    .frame-tag-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    /* String */
-    .tag-string {
-      width: 1px;
-      height: 28px;
-      background: rgba(0,0,0,0.18);
-      margin-bottom: 0;
-      position: relative;
-    }
-
-    .tag-string::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -1px;
-      width: 3px; height: 3px;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.25);
-    }
-
-    .frame-tag {
-      background: #ffffff;
-      border-radius: 3px;
-      padding: 24px 32px 28px;
-      width: 100%;
-      position: relative;
-      box-shadow:
-        0 2px 16px rgba(0,0,0,0.1),
-        0 1px 3px rgba(0,0,0,0.08),
-        0 0 0 1px rgba(0,0,0,0.06);
-    }
-
-    /* Hole at top */
-    .frame-tag::before {
-      content: '';
-      position: absolute;
-      top: -1px; left: 50%;
-      transform: translateX(-50%);
-      width: 10px; height: 10px;
-      background: var(--bg);
-      border-radius: 50%;
-      border: 1px solid rgba(0,0,0,0.12);
-    }
-
-    .tag-brand {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(0,0,0,0.2);
-      text-align: center;
-      margin-bottom: 20px;
-      padding-top: 8px;
-    }
-
-    /* Horizontal rule below brand */
-    .tag-rule {
-      border: none;
-      border-top: 1px solid rgba(0,0,0,0.08);
-      margin: 0 -8px 20px;
-    }
-
-    .frame-tag .form-label { color: rgba(0,0,0,0.4); }
-    .frame-tag .form-input { color: #111; border-bottom-color: rgba(0,0,0,0.12); }
-    .frame-tag .form-input::placeholder { color: rgba(0,0,0,0.25); }
-    .tag-field { margin-bottom: 20px; }
-    .frame-tag .pick-btn { background: #111; color: white; display: block; width: 100%; text-align: center; }
-    .frame-tag .drop-zone-inner { text-align: center; padding: 24px 0 16px; }
-    .tag-drop-label {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-style: italic;
-      font-size: 16px;
-      color: rgba(0,0,0,0.5);
-      margin-bottom: 6px;
-    }
-    .tag-drop-hint { font-size: 11px; color: rgba(0,0,0,0.3); margin-bottom: 16px; }
-    .tag-formats { font-size: 9px; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(0,0,0,0.2); margin-top: 12px; }
-
-    /* Dragging state for tag */
-    .frame-tag.drag-over {
-      background: #f8f8f8;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.15), 0 0 0 2px rgba(0,0,0,0.12);
-    }
 
     @media (max-width: 580px) {
       header { padding: 20px 24px 16px; }
       main { padding: 36px 24px 80px; }
       .cat-btn { margin-right: 18px; font-size: 10px; }
-      .frame-book { padding-left: 48px; }
+      .open-book { grid-template-columns: 0 0 1fr; }
+      .book-page-left, .book-spine { display: none; }
+      .book-page-right { padding: 28px; border-radius: 3px; }
     }
   </style>
 </head>
@@ -812,7 +205,6 @@
 </header>
 
 <main>
-
   <nav class="cats">
     <button class="cat-btn active" data-cat="music">Music</button>
     <button class="cat-btn" data-cat="book">Books</button>
@@ -827,86 +219,76 @@
 
   <div id="upload-section">
 
-    <!-- ── MUSIC: CD Jewel Case ── -->
+    <!-- MUSIC: Vinyl -->
     <div id="input-music" class="input-section">
-      <div class="cd-case">
-        <div class="cd-tabs">
-          <button class="cd-tab active" id="music-tab-upload">Upload</button>
-          <button class="cd-tab" id="music-tab-search">Search by name</button>
-        </div>
-
-        <div id="music-upload-panel" class="cd-upload-panel">
-          <div class="cd-disc-zone" id="music-drop">
-            <div class="cd-disc-label">
-              <div class="cd-drop-text">Drop a song<br>or</div>
-              <button class="cd-pick-btn" id="music-pick-btn">Browse files</button>
+      <div class="vinyl-case">
+        <div class="vinyl-record-wrap">
+          <div class="vinyl-record" id="music-drop">
+            <div class="vinyl-center-label">
+              <span class="vinyl-label-brand">Likewise</span>
+              <div class="vinyl-spindle"></div>
             </div>
             <input type="file" id="music-file" accept="audio/*,.mp3,.flac,.wav,.m4a,.ogg,.aac" style="display:none">
           </div>
-          <div class="cd-formats">MP3 &middot; FLAC &middot; WAV &middot; M4A &middot; OGG &middot; up to 50 MB</div>
         </div>
 
-        <div id="music-search-panel" class="cd-liner hidden">
-          <div class="cd-liner-title">Liner notes &mdash; search</div>
+        <div class="vinyl-tabs">
+          <button class="vinyl-tab active" id="music-tab-search">Search by name</button>
+          <button class="vinyl-tab" id="music-tab-upload">Upload file</button>
+        </div>
+
+        <!-- Search (default) -->
+        <div id="music-search-panel" class="vinyl-sleeve">
+          <div class="vinyl-sleeve-hdr">Track info</div>
           <form id="music-search-form">
-            <div class="liner-field">
-              <label class="form-label" style="color:rgba(92,80,64,0.6)">Song title</label>
+            <div class="vinyl-sleeve-field">
+              <label class="form-label">Song title</label>
               <input class="form-input" id="music-title-input" type="text" placeholder="Enter a song title" autocomplete="off">
             </div>
-            <div class="liner-field">
-              <label class="form-label" style="color:rgba(92,80,64,0.6)">Artist <span style="font-weight:300;text-transform:none;letter-spacing:0;font-size:9px">(optional)</span></label>
+            <div class="vinyl-sleeve-field">
+              <label class="form-label" style="opacity:.8">Artist <span style="font-weight:300;text-transform:none;letter-spacing:0">(optional)</span></label>
               <input class="form-input" id="music-artist-input" type="text" placeholder="Optional" autocomplete="off">
             </div>
-            <button type="submit" class="pick-btn cd-submit-btn">Find matches</button>
+            <button type="submit" class="pick-btn" style="background:#14141a;color:rgba(255,255,255,.88)">Find matches</button>
           </form>
+        </div>
+
+        <!-- Upload (hidden by default) -->
+        <div id="music-upload-panel" class="vinyl-upload-panel hidden">
+          <div class="vinyl-upload-text">Drop a song onto the record above, or</div>
+          <button class="vinyl-browse-btn" id="music-pick-btn">Browse files</button>
+          <div class="vinyl-formats">MP3 &middot; FLAC &middot; WAV &middot; M4A &middot; OGG &middot; up to 50 MB</div>
         </div>
       </div>
     </div>
 
-    <!-- ── BOOKS / TV / FILM: physical frame set by JS ── -->
+    <!-- BOOKS / TV / FILM: injected by renderTextFrame() -->
     <div id="input-text" class="input-section hidden">
-      <!-- frame-book, frame-vhs, frame-ticket applied dynamically -->
-
-      <!-- BOOK wrapper (default; JS swaps it) -->
-      <div class="frame-book-wrap" id="text-frame-outer">
-        <div class="frame-book" id="text-frame-inner">
-          <div id="text-frame-book" class="text-frame-variant">
-            <div class="book-field">
-              <label class="form-label" id="title-label">Title</label>
-              <input class="form-input" id="title-input" type="text" placeholder="Enter a title" autocomplete="off">
-            </div>
-            <div class="book-field" id="creator-field">
-              <label class="form-label" id="creator-label">Author</label>
-              <input class="form-input" id="creator-input" type="text" placeholder="Optional" autocomplete="off">
-            </div>
-            <button type="submit" form="text-form" class="pick-btn">Find matches</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Hidden form for submission -->
+      <div id="text-frame-outer"></div>
       <form id="text-form" style="display:none"></form>
     </div>
 
-    <!-- ── FASHION: Clothing Hang Tag ── -->
+    <!-- FASHION: T-shirt on hanger -->
     <div id="input-fashion" class="input-section hidden">
-      <div class="frame-tag-wrap">
-        <div class="tag-string"></div>
-        <div class="frame-tag" id="fashion-drop">
-          <div class="tag-brand">Likewise</div>
-          <hr class="tag-rule">
-          <div class="drop-zone-inner">
-            <div class="tag-drop-label">Drop an image here</div>
-            <div class="tag-drop-hint">a photo of a piece or outfit</div>
-            <button class="pick-btn" id="fashion-pick-btn" style="background:#111;color:white">Choose image</button>
-            <div class="tag-formats">JPG &middot; PNG &middot; WEBP &middot; up to 20 MB</div>
+      <div class="tshirt-container">
+        <svg class="hanger-svg" viewBox="0 0 220 68" xmlns="http://www.w3.org/2000/svg">
+          <path d="M110 9 C110 3 118 1 121 6 C124 11 119 17 110 22" fill="none" stroke="#b0a898" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M110 22 L110 32 L14 60 L206 60 L110 32" fill="none" stroke="#b0a898" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="shirt-wrap" id="fashion-drop">
+          <div class="shirt">
+            <div class="shirt-content">
+              <div class="shirt-drop-label">Drop an image here</div>
+              <div class="shirt-drop-hint">a photo of a piece or outfit</div>
+              <button class="shirt-pick-btn" id="fashion-pick-btn">Choose image</button>
+              <div class="shirt-formats">JPG &middot; PNG &middot; WEBP &middot; up to 20 MB</div>
+            </div>
           </div>
           <input type="file" id="fashion-file" accept="image/*,.jpg,.jpeg,.png,.webp" style="display:none">
         </div>
       </div>
     </div>
 
-    <!-- File row (shared) -->
     <div id="file-row" class="file-row hidden">
       <div class="file-info">
         <div class="file-name" id="fname"></div>
@@ -914,23 +296,19 @@
       </div>
       <button class="go-btn" id="go-btn">Find matches</button>
     </div>
-
     <div id="err-box" class="error-box hidden"><span id="err-text"></span></div>
   </div>
 
-  <!-- Loading -->
   <div id="loading-section" class="loading hidden">
     <div class="loading-text">Finding something you'll love<span class="loading-dots"></span></div>
   </div>
 
-  <!-- Results -->
   <div id="results-section" class="results hidden">
     <div class="results-meta" id="r-verb">Listening to</div>
     <div class="results-based"><em id="r-title"></em><span id="r-sep"> &mdash; </span><span id="r-creator"></span></div>
     <div class="rec-list" id="rec-list"></div>
     <button class="reset-link" id="reset-btn">&#8592; Try something else</button>
   </div>
-
 </main>
 
 <script>
@@ -939,69 +317,94 @@
 
   var CATS = {
     music:   { headline: "A song you love.<br><em>Five you haven't heard.</em>",  verb: 'Listening to', input: 'music' },
-    book:    { headline: 'A book you loved.<br><em>Five to read next.</em>',       verb: 'Reading',      input: 'text',  titleLabel: 'Title',      creatorLabel: 'Author',   showCreator: true,  frame: 'book' },
-    tv:      { headline: 'A show you finished.<br><em>Five to start next.</em>',   verb: 'Watching',     input: 'text',  titleLabel: 'Show title', creatorLabel: 'Creator',  showCreator: true,  frame: 'vhs'  },
-    film:    { headline: 'A film you loved.<br><em>Five to watch next.</em>',      verb: 'Watching',     input: 'text',  titleLabel: 'Title',      creatorLabel: 'Director', showCreator: true,  frame: 'ticket' },
+    book:    { headline: 'A book you loved.<br><em>Five to read next.</em>',       verb: 'Reading',      input: 'text', titleLabel: 'Title',      creatorLabel: 'Author',   showCreator: true,  frame: 'book' },
+    tv:      { headline: 'A show you finished.<br><em>Five to start next.</em>',   verb: 'Watching',     input: 'text', titleLabel: 'Show title', creatorLabel: 'Creator',  showCreator: true,  frame: 'tv' },
+    film:    { headline: 'A film you loved.<br><em>Five to watch next.</em>',      verb: 'Watching',     input: 'text', titleLabel: 'Title',      creatorLabel: 'Director', showCreator: true,  frame: 'ticket' },
     fashion: { headline: 'A piece you wear.<br><em>Five to add to it.</em>',       verb: 'Inspired by',  input: 'fashion' }
   };
 
-  // Frame renderers for each text-based category
+  function formFields(cfg) {
+    var creatorHide = cfg.showCreator ? '' : ' hidden';
+    return '<div class="' + cfg.fldClass + '">' +
+      '<label class="form-label" id="title-label">' + esc(cfg.titleLabel) + '</label>' +
+      '<input class="form-input" id="title-input" type="text" placeholder="Enter a title" autocomplete="off">' +
+    '</div>' +
+    '<div class="' + cfg.fldClass + creatorHide + '" id="creator-field">' +
+      '<label class="form-label" id="creator-label">' + esc(cfg.creatorLabel || '') + '</label>' +
+      '<input class="form-input" id="creator-input" type="text" placeholder="Optional" autocomplete="off">' +
+    '</div>';
+  }
+
   function renderTextFrame(cfg) {
     var outer = document.getElementById('text-frame-outer');
-    var inner = document.getElementById('text-frame-inner');
-
-    // Remove all frame classes from outer wrapper
-    outer.className = '';
-    inner.className = '';
 
     if (cfg.frame === 'book') {
-      outer.className = 'frame-book-wrap';
-      inner.className = 'frame-book';
-      inner.innerHTML = buildTextFormHTML(cfg, 'book-field', '#5c3d20', 'Find matches');
-
-    } else if (cfg.frame === 'vhs') {
-      outer.className = '';
-      inner.className = '';
+      cfg.fldClass = 'book-field';
       outer.innerHTML =
-        '<div class="frame-vhs">' +
-          '<div class="vhs-window"><div class="vhs-reel"></div><div class="vhs-tape"></div><div class="vhs-reel"></div></div>' +
-          '<div class="vhs-label">' +
-            '<div class="vhs-label-title">Likewise</div>' +
-            buildTextFormHTML(cfg, 'vhs-field', '#111', 'Find matches') +
+        '<div style="position:relative">' +
+          '<div class="open-book">' +
+            '<div class="book-page-left">' +
+              '<div class="book-page-num" style="margin-top:140px">i</div>' +
+            '</div>' +
+            '<div class="book-spine"></div>' +
+            '<div class="book-page-right">' +
+              formFields(cfg) +
+              '<button type="submit" form="text-form" class="pick-btn" style="background:#5c3d20;color:#f3eedf">Find matches</button>' +
+            '</div>' +
           '</div>' +
-          '<div class="vhs-bottom"></div>' +
+          '<div style="position:absolute;right:-5px;top:5px;bottom:-5px;width:100%;background:#e6e0ca;z-index:-1;border-radius:3px"></div>' +
+          '<div style="position:absolute;right:-9px;top:9px;bottom:-9px;width:100%;background:#d8d2bc;z-index:-2;border-radius:3px"></div>' +
         '</div>';
-      return; // innerHTML replaced, no need to set inner
+
+    } else if (cfg.frame === 'tv') {
+      cfg.fldClass = 'tv-field';
+      outer.innerHTML =
+        '<div class="crt-tv">' +
+          '<div class="tv-screen">' +
+            '<div class="tv-screen-content">' +
+              '<div class="tv-channel">Ch. 5 &mdash; Likewise</div>' +
+              formFields(cfg) +
+              '<button type="submit" form="text-form" class="tv-submit">Find matches</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="tv-base">' +
+            '<div class="tv-knobs"><div class="tv-knob"></div><div class="tv-knob"></div></div>' +
+            '<div class="tv-brand-tag">LIKEWISE</div>' +
+          '</div>' +
+        '</div>';
 
     } else if (cfg.frame === 'ticket') {
-      outer.className = '';
-      inner.className = '';
+      cfg.fldClass = 'ticket-field';
       outer.innerHTML =
-        '<div class="frame-ticket-wrap">' +
-          '<div class="frame-ticket">' +
+        '<div class="ticket-wrap">' +
+          '<div class="ticket">' +
             '<div class="ticket-stub"><span class="ticket-stub-text">Admit One</span></div>' +
-            '<div class="ticket-notch-top"></div>' +
-            '<div class="ticket-notch-bottom"></div>' +
-            '<div class="ticket-header">Likewise</div>' +
-            buildTextFormHTML(cfg, 'ticket-field', '#2a1c08', 'Find matches') +
+            '<div class="ticket-notch top"></div>' +
+            '<div class="ticket-notch bot"></div>' +
+            '<div class="ticket-hdr">Likewise</div>' +
+            formFields(cfg) +
+            '<button type="submit" form="text-form" class="pick-btn" style="background:#2a1c08;color:#f0e8d0">Find matches</button>' +
           '</div>' +
         '</div>';
-      return;
     }
   }
 
-  function buildTextFormHTML(cfg, fieldClass, btnBg, btnLabel) {
-    var creatorHidden = cfg.showCreator ? '' : ' hidden';
-    return '<div class="' + fieldClass + '">' +
-        '<label class="form-label" id="title-label">' + esc(cfg.titleLabel) + '</label>' +
-        '<input class="form-input" id="title-input" type="text" placeholder="Enter a title" autocomplete="off">' +
-      '</div>' +
-      '<div class="' + fieldClass + creatorHidden + '" id="creator-field">' +
-        '<label class="form-label" id="creator-label">' + esc(cfg.creatorLabel || '') + '</label>' +
-        '<input class="form-input" id="creator-input" type="text" placeholder="Optional" autocomplete="off">' +
-      '</div>' +
-      '<button type="submit" form="text-form" class="pick-btn" style="background:' + btnBg + ';color:' + (btnBg === '#111' || btnBg === '#2a1c08' || btnBg === '#5c3d20' ? 'white' : '#f3eedf') + '">' + btnLabel + '</button>';
+  function attachTextFormListeners() {
+    document.getElementById('text-form').onsubmit = function(e) {
+      e.preventDefault();
+      var titleEl   = document.getElementById('title-input');
+      var creatorEl = document.getElementById('creator-input');
+      var title   = titleEl   ? titleEl.value.trim()   : '';
+      var creator = creatorEl ? creatorEl.value.trim() : '';
+      if (!title) { showErr('Please enter a title.'); return; }
+      var form = new FormData();
+      form.append('category', currentCat);
+      form.append('title', title);
+      form.append('creator', creator);
+      doRequest(form);
+    };
   }
+  attachTextFormListeners();
 
   function switchCat(cat) {
     if (cat === currentCat) return;
@@ -1011,7 +414,6 @@
     document.querySelectorAll('.cat-btn').forEach(function(b) {
       b.classList.toggle('active', b.dataset.cat === cat);
     });
-
     document.getElementById('headline').innerHTML = CATS[cat].headline;
     document.querySelectorAll('.input-section').forEach(function(el) { el.classList.add('hidden'); });
 
@@ -1019,7 +421,6 @@
     if (cfg.input === 'text') {
       renderTextFrame(cfg);
       document.getElementById('input-text').classList.remove('hidden');
-      // Re-attach submit listener to newly rebuilt form elements
       attachTextFormListeners();
       var ti = document.getElementById('title-input');
       if (ti) { ti.value = ''; ti.focus(); }
@@ -1040,35 +441,7 @@
   document.getElementById('reset-btn').addEventListener('click', function() { reset(); });
   document.getElementById('go-btn').addEventListener('click', submitFile);
 
-  // Text form submit — delegate via the hidden form element
-  function attachTextFormListeners() {
-    document.getElementById('text-form').onsubmit = function(e) {
-      e.preventDefault();
-      var titleEl = document.getElementById('title-input');
-      var creatorEl = document.getElementById('creator-input');
-      var title   = titleEl ? titleEl.value.trim() : '';
-      var creator = creatorEl ? creatorEl.value.trim() : '';
-      if (!title) { showErr('Please enter a title.'); return; }
-      var form = new FormData();
-      form.append('category', currentCat);
-      form.append('title', title);
-      form.append('creator', creator);
-      doRequest(form);
-    };
-  }
-  attachTextFormListeners();
-
   // Music tabs
-  document.getElementById('music-tab-upload').addEventListener('click', function() {
-    document.getElementById('music-tab-upload').classList.add('active');
-    document.getElementById('music-tab-search').classList.remove('active');
-    document.getElementById('music-upload-panel').classList.remove('hidden');
-    document.getElementById('music-search-panel').classList.add('hidden');
-    selectedFile = null;
-    document.getElementById('music-file').value = '';
-    document.getElementById('file-row').classList.add('hidden');
-  });
-
   document.getElementById('music-tab-search').addEventListener('click', function() {
     document.getElementById('music-tab-search').classList.add('active');
     document.getElementById('music-tab-upload').classList.remove('active');
@@ -1078,6 +451,13 @@
     document.getElementById('music-file').value = '';
     document.getElementById('file-row').classList.add('hidden');
     document.getElementById('music-title-input').focus();
+  });
+
+  document.getElementById('music-tab-upload').addEventListener('click', function() {
+    document.getElementById('music-tab-upload').classList.add('active');
+    document.getElementById('music-tab-search').classList.remove('active');
+    document.getElementById('music-upload-panel').classList.remove('hidden');
+    document.getElementById('music-search-panel').classList.add('hidden');
   });
 
   document.getElementById('music-search-form').addEventListener('submit', function(e) {
@@ -1093,38 +473,29 @@
   });
 
   // Drop zones
-  setupDrop('music-drop',   'music-file',   'music-pick-btn');
-  setupFashionDrop();
+  (function() {
+    var disc    = document.getElementById('music-drop');
+    var musicIn = document.getElementById('music-file');
+    var pickBtn = document.getElementById('music-pick-btn');
+    disc.addEventListener('click',    function()  { musicIn.click(); });
+    disc.addEventListener('dragover', function(e) { e.preventDefault(); disc.classList.add('drag-over'); });
+    disc.addEventListener('dragleave',function()  { disc.classList.remove('drag-over'); });
+    disc.addEventListener('drop',     function(e) { e.preventDefault(); disc.classList.remove('drag-over'); if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]); });
+    musicIn.addEventListener('change', function() { if (musicIn.files[0]) setFile(musicIn.files[0]); });
+    if (pickBtn) pickBtn.addEventListener('click', function(e) { e.stopPropagation(); musicIn.click(); });
+  })();
 
-  function setupDrop(zoneId, inputId, pickBtnId) {
-    var zone    = document.getElementById(zoneId);
-    var input   = document.getElementById(inputId);
-    var pickBtn = document.getElementById(pickBtnId);
-    pickBtn.addEventListener('click',     function(e) { e.stopPropagation(); input.click(); });
-    zone.addEventListener('click',        function()  { input.click(); });
-    zone.addEventListener('dragover',     function(e) { e.preventDefault(); zone.classList.add('drag-over'); });
-    zone.addEventListener('dragleave',    function()  { zone.classList.remove('drag-over'); });
-    zone.addEventListener('drop',         function(e) {
-      e.preventDefault(); zone.classList.remove('drag-over');
-      if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]);
-    });
-    input.addEventListener('change', function() { if (input.files[0]) setFile(input.files[0]); });
-  }
-
-  function setupFashionDrop() {
-    var zone  = document.getElementById('fashion-drop');
-    var input = document.getElementById('fashion-file');
-    var btn   = document.getElementById('fashion-pick-btn');
-    btn.addEventListener('click',     function(e) { e.stopPropagation(); input.click(); });
-    zone.addEventListener('click',    function()  { input.click(); });
-    zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('drag-over'); });
-    zone.addEventListener('dragleave',function()  { zone.classList.remove('drag-over'); });
-    zone.addEventListener('drop',     function(e) {
-      e.preventDefault(); zone.classList.remove('drag-over');
-      if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]);
-    });
-    input.addEventListener('change',  function() { if (input.files[0]) setFile(input.files[0]); });
-  }
+  (function() {
+    var zone    = document.getElementById('fashion-drop');
+    var fashIn  = document.getElementById('fashion-file');
+    var btn     = document.getElementById('fashion-pick-btn');
+    btn.addEventListener('click',     function(e) { e.stopPropagation(); fashIn.click(); });
+    zone.addEventListener('click',    function()  { fashIn.click(); });
+    zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.querySelector('.shirt').style.opacity = '0.85'; });
+    zone.addEventListener('dragleave',function()  { zone.querySelector('.shirt').style.opacity = ''; });
+    zone.addEventListener('drop',     function(e) { e.preventDefault(); zone.querySelector('.shirt').style.opacity = ''; if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]); });
+    fashIn.addEventListener('change', function() { if (fashIn.files[0]) setFile(fashIn.files[0]); });
+  })();
 
   function setFile(file) {
     selectedFile = file;
@@ -1134,9 +505,7 @@
     document.getElementById('err-box').classList.add('hidden');
   }
 
-  function fmtSize(b) {
-    return b < 1048576 ? (b/1024).toFixed(1)+' KB' : (b/1048576).toFixed(1)+' MB';
-  }
+  function fmtSize(b) { return b < 1048576 ? (b/1024).toFixed(1)+' KB' : (b/1048576).toFixed(1)+' MB'; }
 
   function submitFile() {
     if (!selectedFile) return;
@@ -1155,24 +524,18 @@
       var data = await res.json();
       if (!res.ok || data.error) { showState('upload'); showErr(data.error || 'Something went wrong.'); return; }
       renderResults(data);
-    } catch(e) {
-      showState('upload');
-      showErr('Network error. Please try again.');
-    }
+    } catch(e) { showState('upload'); showErr('Network error. Please try again.'); }
   }
 
   function renderResults(data) {
-    var det     = data.detected || {};
-    var title   = det.title   || '';
-    var creator = det.creator || '';
-
+    var det = data.detected || {};
     document.getElementById('r-verb').textContent    = CATS[currentCat].verb;
-    document.getElementById('r-title').textContent   = title;
-    document.getElementById('r-creator').textContent = creator;
-    document.getElementById('r-sep').style.display   = creator ? '' : 'none';
+    document.getElementById('r-title').textContent   = det.title || '';
+    document.getElementById('r-creator').textContent = det.creator || '';
+    document.getElementById('r-sep').style.display   = det.creator ? '' : 'none';
 
-    var list      = document.getElementById('rec-list');
-    var isFashion = (currentCat === 'fashion');
+    var list = document.getElementById('rec-list');
+    var isFashion = currentCat === 'fashion';
     list.innerHTML = '';
 
     (data.recommendations || []).forEach(function(rec, i) {
@@ -1185,29 +548,21 @@
       if (!isFashion && rec.year) byline += (byline ? ' &nbsp;&middot;&nbsp; ' : '') + esc(rec.year);
       if (isFashion && rec.price_range) byline += (byline ? ' &nbsp;&middot;&nbsp; ' : '') + '<span class="rec-price">' + esc(rec.price_range) + '</span>';
 
-      var linkHtml = links.map(function(l) {
-        return '<a class="rec-link" href="'+l[1]+'" target="_blank" rel="noopener">'+l[0]+'</a>';
-      }).join('');
+      var linkHtml = links.map(function(l) { return '<a class="rec-link" href="'+l[1]+'" target="_blank" rel="noopener">'+l[0]+'</a>'; }).join('');
 
-      var imageHtml = '';
+      var imgHtml = '';
       if (isFashion) {
-        var seed = (i + 1) * 313 + rec.title.length * 17;
-        var kw   = encodeURIComponent(rec.title + ' ' + (rec.creator || '') + ' fashion');
-        imageHtml = '<div class="fashion-img-wrap">' +
-          '<img class="fashion-img" loading="lazy" alt="'+esc(rec.title)+'" ' +
-          'src="https://loremflickr.com/640/360/'+kw+'?lock='+seed+'" ' +
-          'onerror="this.closest(\'.fashion-img-wrap\').style.display=\'none\'"></div>';
+        var seed = (i+1)*313 + rec.title.length*17;
+        var kw = encodeURIComponent(rec.title+' '+(rec.creator||'')+' fashion');
+        imgHtml = '<div class="fashion-img-wrap"><img class="fashion-img" loading="lazy" alt="'+esc(rec.title)+'" src="https://loremflickr.com/640/360/'+kw+'?lock='+seed+'" onerror="this.closest(\'.fashion-img-wrap\').style.display=\'none\'"></div>';
       }
 
-      item.innerHTML =
-        (isFashion ? imageHtml : '') +
-        '<div class="rec-n">0' + (i+1) + '</div>' +
-        '<div class="rec-body">' +
-          '<div class="rec-title">'+esc(rec.title)+'</div>' +
-          (byline ? '<div class="rec-byline">'+byline+'</div>' : '') +
-          '<div class="rec-reason">'+esc(rec.reason)+'</div>' +
-          '<div class="rec-links">'+linkHtml+'</div>' +
-        '</div>';
+      item.innerHTML = (isFashion ? imgHtml : '') +
+        '<div class="rec-n">0'+(i+1)+'</div>' +
+        '<div><div class="rec-title">'+esc(rec.title)+'</div>' +
+        (byline ? '<div class="rec-byline">'+byline+'</div>' : '') +
+        '<div class="rec-reason">'+esc(rec.reason)+'</div>' +
+        '<div class="rec-links">'+linkHtml+'</div></div>';
       list.appendChild(item);
     });
 
@@ -1215,20 +570,19 @@
   }
 
   function makeLinks(cat, title, creator) {
-    var tq   = encodeURIComponent(title || '');
-    var full = encodeURIComponent(creator ? title+' '+creator : title);
-    if (cat === 'music')   return [['Spotify','https://open.spotify.com/search/'+full],['YouTube','https://www.youtube.com/results?search_query='+full]];
-    if (cat === 'book')    return [['Goodreads','https://www.goodreads.com/search?q='+full],['Open Library','https://openlibrary.org/search?q='+full]];
-    if (cat === 'tv')      return [['IMDb','https://www.imdb.com/find?q='+tq],['JustWatch','https://www.justwatch.com/us/search?q='+tq]];
-    if (cat === 'film')    return [['IMDb','https://www.imdb.com/find?q='+tq],['Letterboxd','https://letterboxd.com/search/'+tq+'/']];
-    if (cat === 'fashion') return [['Shop','https://www.google.com/search?tbm=shop&q='+full],['Pinterest','https://www.pinterest.com/search/pins/?q='+full],['Images','https://www.google.com/search?tbm=isch&q='+full]];
+    var tq = encodeURIComponent(title||''), full = encodeURIComponent(creator ? title+' '+creator : title);
+    if (cat==='music')   return [['Spotify','https://open.spotify.com/search/'+full],['YouTube','https://www.youtube.com/results?search_query='+full]];
+    if (cat==='book')    return [['Goodreads','https://www.goodreads.com/search?q='+full],['Open Library','https://openlibrary.org/search?q='+full]];
+    if (cat==='tv')      return [['IMDb','https://www.imdb.com/find?q='+tq],['JustWatch','https://www.justwatch.com/us/search?q='+tq]];
+    if (cat==='film')    return [['IMDb','https://www.imdb.com/find?q='+tq],['Letterboxd','https://letterboxd.com/search/'+tq+'/']];
+    if (cat==='fashion') return [['Shop','https://www.google.com/search?tbm=shop&q='+full],['Pinterest','https://www.pinterest.com/search/pins/?q='+full],['Images','https://www.google.com/search?tbm=isch&q='+full]];
     return [];
   }
 
   function showState(s) {
-    document.getElementById('upload-section').classList.toggle('hidden',  s !== 'upload');
-    document.getElementById('loading-section').classList.toggle('hidden', s !== 'loading');
-    document.getElementById('results-section').classList.toggle('hidden', s !== 'results');
+    document.getElementById('upload-section').classList.toggle('hidden',  s!=='upload');
+    document.getElementById('loading-section').classList.toggle('hidden', s!=='loading');
+    document.getElementById('results-section').classList.toggle('hidden', s!=='results');
   }
 
   function showErr(msg) {
@@ -1242,25 +596,20 @@
     document.getElementById('fashion-file').value = '';
     document.getElementById('file-row').classList.add('hidden');
     document.getElementById('err-box').classList.add('hidden');
-    // Reset music tab
-    document.getElementById('music-tab-upload').classList.add('active');
-    document.getElementById('music-tab-search').classList.remove('active');
-    document.getElementById('music-upload-panel').classList.remove('hidden');
-    document.getElementById('music-search-panel').classList.add('hidden');
+    document.getElementById('music-tab-search').classList.add('active');
+    document.getElementById('music-tab-upload').classList.remove('active');
+    document.getElementById('music-search-panel').classList.remove('hidden');
+    document.getElementById('music-upload-panel').classList.add('hidden');
     document.getElementById('music-title-input').value  = '';
     document.getElementById('music-artist-input').value = '';
     if (!keepInputs) {
-      var ti = document.getElementById('title-input');
-      var ci = document.getElementById('creator-input');
-      if (ti) ti.value = '';
-      if (ci) ci.value = '';
+      var ti = document.getElementById('title-input'), ci = document.getElementById('creator-input');
+      if (ti) ti.value = ''; if (ci) ci.value = '';
     }
     showState('upload');
   }
 
-  function esc(s) {
-    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
+  function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 </script>
 </body>
 </html>
