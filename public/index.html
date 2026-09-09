@@ -78,6 +78,24 @@
     .fashion-img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .reset-link { font-size: 13px; color: var(--muted); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; background: none; border: none; font-family: inherit; transition: color 0.15s; padding: 0; }
     .reset-link:hover { color: var(--text); }
+
+    /* Save button */
+    .save-btn { background: none; border: none; cursor: pointer; padding: 2px 0 2px 12px; color: #ccc; transition: color 0.15s, transform 0.1s; line-height: 0; flex-shrink: 0; }
+    .save-btn:hover { color: #999; transform: scale(1.15); }
+    .save-btn.saved { color: var(--text); }
+    .rec-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+    .rec-title-row .rec-title { margin-bottom: 0; }
+
+    /* Saved section */
+    .saved-group { margin-bottom: 36px; }
+    .saved-group-label { font-size: 9px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .saved-item { padding: 16px 0; border-top: 1px solid var(--border); display: flex; align-items: flex-start; gap: 12px; }
+    .saved-item:last-child { border-bottom: 1px solid var(--border); }
+    .saved-item-body { flex: 1; min-width: 0; }
+    .saved-item-title { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: -0.01em; text-transform: uppercase; margin-bottom: 2px; }
+    .saved-item-byline { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+    .saved-empty { padding: 48px 0; text-align: center; color: var(--muted); font-size: 13px; letter-spacing: 0.04em; }
+
     .hidden { display: none !important; }
 
 
@@ -222,6 +240,7 @@
     <button class="cat-btn" data-cat="film">Film</button>
     <button class="cat-btn" data-cat="tv">TV</button>
     <button class="cat-btn" data-cat="book">Books</button>
+    <button class="cat-btn hidden" data-cat="saved" id="saved-tab">Saved</button>
   </nav>
 
   <div class="hero">
@@ -320,11 +339,59 @@
     <div class="rec-list" id="rec-list"></div>
     <button class="reset-link" id="reset-btn">&#8592; Try something else</button>
   </div>
+
+  <div id="saved-section" class="results hidden">
+    <div class="results-meta">Saved</div>
+    <div id="saved-list"></div>
+  </div>
 </main>
 
 <script>
   var currentCat = 'music';
   var selectedFile = null;
+  var prevCat = 'music'; // category before switching to saved
+
+  // ── Saved state ──────────────────────────────────────────────────────
+  var savedItems = [];
+  try { savedItems = JSON.parse(localStorage.getItem('likewise_saved') || '[]'); } catch(e) {}
+
+  function savedId(cat, title, creator) {
+    return cat + '|' + (title || '') + '|' + (creator || '');
+  }
+
+  function isSaved(id) {
+    return savedItems.some(function(s) { return s.id === id; });
+  }
+
+  function persistSaved() {
+    try { localStorage.setItem('likewise_saved', JSON.stringify(savedItems)); } catch(e) {}
+    var tab = document.getElementById('saved-tab');
+    if (savedItems.length > 0) tab.classList.remove('hidden');
+    else { tab.classList.add('hidden'); if (currentCat === 'saved') switchCat(prevCat); }
+  }
+
+  function toggleSave(id, item) {
+    if (isSaved(id)) {
+      savedItems = savedItems.filter(function(s) { return s.id !== id; });
+    } else {
+      savedItems.push(item);
+    }
+    persistSaved();
+    // Update all hearts with this id
+    document.querySelectorAll('.save-btn[data-id="' + id + '"]').forEach(function(btn) {
+      btn.classList.toggle('saved', isSaved(id));
+      btn.innerHTML = isSaved(id) ? heartFilled() : heartEmpty();
+    });
+    if (currentCat === 'saved') renderSavedSection();
+  }
+
+  function heartEmpty() {
+    return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+  }
+
+  function heartFilled() {
+    return '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+  }
 
   var CATS = {
     music:   { headline: 'A song you love.<br><em>Five you haven\'t heard.</em>',  verb: 'Listening to', input: 'music' },
@@ -434,12 +501,22 @@
 
   function switchCat(cat) {
     if (cat === currentCat) return;
+    if (cat !== 'saved') prevCat = cat;
     currentCat = cat;
-    reset(true);
 
     document.querySelectorAll('.cat-btn').forEach(function(b) {
       b.classList.toggle('active', b.dataset.cat === cat);
     });
+
+    if (cat === 'saved') {
+      document.getElementById('headline').innerHTML = 'Things<br><em>you loved.</em>';
+      document.querySelectorAll('.input-section').forEach(function(el) { el.classList.add('hidden'); });
+      showState('saved');
+      renderSavedSection();
+      return;
+    }
+
+    reset(true);
     document.getElementById('headline').innerHTML = CATS[cat].headline;
     document.querySelectorAll('.input-section').forEach(function(el) { el.classList.add('hidden'); });
 
@@ -565,8 +642,10 @@
     list.innerHTML = '';
 
     (data.recommendations || []).forEach(function(rec, i) {
-      var links = makeLinks(currentCat, rec.title, rec.creator);
-      var item  = document.createElement('div');
+      var links  = makeLinks(currentCat, rec.title, rec.creator);
+      var itemId = savedId(currentCat, rec.title, rec.creator);
+      var saved  = isSaved(itemId);
+      var item   = document.createElement('div');
       item.className = 'rec-item';
       item.style.animationDelay = (i * 0.06) + 's';
 
@@ -585,15 +664,70 @@
 
       item.innerHTML = (isFashion ? imgHtml : '') +
         '<div class="rec-n">0'+(i+1)+'</div>' +
-        '<div><div class="rec-title">'+esc(rec.title)+'</div>' +
-        (byline ? '<div class="rec-byline">'+byline+'</div>' : '') +
-        '<div class="rec-reason">'+esc(rec.reason)+'</div>' +
-        '<div class="rec-links">'+linkHtml+'</div></div>';
+        '<div style="min-width:0">' +
+          '<div class="rec-title-row">' +
+            '<div class="rec-title">'+esc(rec.title)+'</div>' +
+            '<button class="save-btn'+(saved?' saved':'')+'" data-id="'+esc(itemId)+'" aria-label="Save">'+(saved?heartFilled():heartEmpty())+'</button>' +
+          '</div>' +
+          (byline ? '<div class="rec-byline">'+byline+'</div>' : '') +
+          '<div class="rec-reason">'+esc(rec.reason)+'</div>' +
+          '<div class="rec-links">'+linkHtml+'</div>' +
+        '</div>';
+
+      // Attach save handler
+      item.querySelector('.save-btn').addEventListener('click', function() {
+        toggleSave(itemId, { id: itemId, cat: currentCat, title: rec.title, creator: rec.creator, year: rec.year || '', price_range: rec.price_range || '', links: links });
+      });
+
       list.appendChild(item);
     });
 
     showState('results');
   }
+
+  function renderSavedSection() {
+    var list = document.getElementById('saved-list');
+    if (savedItems.length === 0) {
+      list.innerHTML = '<div class="saved-empty">Nothing saved yet — heart a recommendation to save it here.</div>';
+      return;
+    }
+    // Group by category
+    var catOrder = ['music', 'fashion', 'film', 'tv', 'book'];
+    var catLabels = { music: 'Music', fashion: 'Fashion', film: 'Film', tv: 'TV', book: 'Books' };
+    var groups = {};
+    savedItems.forEach(function(s) { if (!groups[s.cat]) groups[s.cat] = []; groups[s.cat].push(s); });
+    var html = '';
+    catOrder.forEach(function(cat) {
+      if (!groups[cat]) return;
+      html += '<div class="saved-group"><div class="saved-group-label">' + esc(catLabels[cat] || cat) + '</div>';
+      groups[cat].forEach(function(s) {
+        var linkHtml = s.links.map(function(l) { return '<a class="rec-link" href="'+l[1]+'" target="_blank" rel="noopener">'+l[0]+'</a>'; }).join('');
+        var byline = s.creator || '';
+        if (s.year) byline += (byline ? ' &nbsp;&middot;&nbsp; ' : '') + s.year;
+        if (s.price_range) byline += (byline ? ' &nbsp;&middot;&nbsp; ' : '') + s.price_range;
+        html += '<div class="saved-item">' +
+          '<div class="saved-item-body">' +
+            '<div class="saved-item-title">'+esc(s.title)+'</div>' +
+            (byline ? '<div class="saved-item-byline">'+esc(byline)+'</div>' : '') +
+            '<div class="rec-links">'+linkHtml+'</div>' +
+          '</div>' +
+          '<button class="save-btn saved" data-id="'+esc(s.id)+'" aria-label="Remove">'+heartFilled()+'</button>' +
+        '</div>';
+      });
+      html += '</div>';
+    });
+    list.innerHTML = html;
+    list.querySelectorAll('.save-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var id = btn.dataset.id;
+        var s = savedItems.find(function(x) { return x.id === id; });
+        if (s) toggleSave(id, s);
+      });
+    });
+  }
+
+  // Show saved tab on load if items exist
+  if (savedItems.length > 0) document.getElementById('saved-tab').classList.remove('hidden');
 
   function makeLinks(cat, title, creator) {
     var tq = encodeURIComponent(title||''), full = encodeURIComponent(creator ? title+' '+creator : title);
@@ -609,6 +743,7 @@
     document.getElementById('upload-section').classList.toggle('hidden',  s!=='upload');
     document.getElementById('loading-section').classList.toggle('hidden', s!=='loading');
     document.getElementById('results-section').classList.toggle('hidden', s!=='results');
+    document.getElementById('saved-section').classList.toggle('hidden',   s!=='saved');
   }
 
   function showErr(msg) {
