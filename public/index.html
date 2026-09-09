@@ -332,6 +332,33 @@
 
     .reset-link:hover { color: var(--text); }
 
+    /* Input mode toggle (e.g. Upload vs Search) */
+    .input-toggle {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+
+    .input-toggle-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 0 0 12px;
+      margin-bottom: -1px;
+      margin-right: 24px;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .input-toggle-btn:hover { color: var(--text); }
+    .input-toggle-btn.active { color: var(--text); border-bottom-color: var(--accent); font-weight: 500; }
+
     .hidden { display: none !important; }
 
     @media (max-width: 580px) {
@@ -364,12 +391,33 @@
   <div id="upload-section">
 
     <div id="input-music" class="input-section">
-      <div class="drop-zone" id="music-drop">
-        <div class="drop-label">Drop a song here</div>
-        <div class="drop-hint">or browse your files</div>
-        <button class="pick-btn" id="music-pick-btn">Choose a file</button>
-        <div class="formats-note">MP3 &middot; FLAC &middot; WAV &middot; M4A &middot; OGG &middot; up to 50 MB</div>
-        <input type="file" id="music-file" accept="audio/*,.mp3,.flac,.wav,.m4a,.ogg,.aac" style="display:none">
+      <div class="input-toggle">
+        <button class="input-toggle-btn active" id="music-tab-upload">Upload file</button>
+        <button class="input-toggle-btn" id="music-tab-search">Search by name</button>
+      </div>
+
+      <div id="music-upload-panel">
+        <div class="drop-zone" id="music-drop">
+          <div class="drop-label">Drop a song here</div>
+          <div class="drop-hint">or browse your files</div>
+          <button class="pick-btn" id="music-pick-btn">Choose a file</button>
+          <div class="formats-note">MP3 &middot; FLAC &middot; WAV &middot; M4A &middot; OGG &middot; up to 50 MB</div>
+          <input type="file" id="music-file" accept="audio/*,.mp3,.flac,.wav,.m4a,.ogg,.aac" style="display:none">
+        </div>
+      </div>
+
+      <div id="music-search-panel" class="hidden">
+        <form class="text-form" id="music-search-form">
+          <div class="form-field">
+            <label class="form-label">Song title</label>
+            <input class="form-input" id="music-title-input" type="text" placeholder="Enter a song title" autocomplete="off">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Artist <span style="font-weight:300;text-transform:none;letter-spacing:0">(optional)</span></label>
+            <input class="form-input" id="music-artist-input" type="text" placeholder="Optional" autocomplete="off">
+          </div>
+          <button type="submit" class="pick-btn">Find matches</button>
+        </form>
       </div>
     </div>
 
@@ -480,6 +528,40 @@
     form.append('category', currentCat);
     form.append('title', title);
     form.append('creator', creator);
+    doRequest(form);
+  });
+
+  // Music tab toggle
+  document.getElementById('music-tab-upload').addEventListener('click', function() {
+    document.getElementById('music-tab-upload').classList.add('active');
+    document.getElementById('music-tab-search').classList.remove('active');
+    document.getElementById('music-upload-panel').classList.remove('hidden');
+    document.getElementById('music-search-panel').classList.add('hidden');
+    selectedFile = null;
+    document.getElementById('music-file').value = '';
+    document.getElementById('file-row').classList.add('hidden');
+  });
+
+  document.getElementById('music-tab-search').addEventListener('click', function() {
+    document.getElementById('music-tab-search').classList.add('active');
+    document.getElementById('music-tab-upload').classList.remove('active');
+    document.getElementById('music-search-panel').classList.remove('hidden');
+    document.getElementById('music-upload-panel').classList.add('hidden');
+    selectedFile = null;
+    document.getElementById('music-file').value = '';
+    document.getElementById('file-row').classList.add('hidden');
+    document.getElementById('music-title-input').focus();
+  });
+
+  document.getElementById('music-search-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var title  = document.getElementById('music-title-input').value.trim();
+    var artist = document.getElementById('music-artist-input').value.trim();
+    if (!title) { showErr('Please enter a song title.'); return; }
+    var form = new FormData();
+    form.append('category', 'music');
+    form.append('title', title);
+    form.append('artist', artist);
     doRequest(form);
   });
 
@@ -621,6 +703,13 @@
     document.getElementById('fashion-file').value = '';
     document.getElementById('file-row').classList.add('hidden');
     document.getElementById('err-box').classList.add('hidden');
+    // Reset music tabs to upload mode
+    document.getElementById('music-tab-upload').classList.add('active');
+    document.getElementById('music-tab-search').classList.remove('active');
+    document.getElementById('music-upload-panel').classList.remove('hidden');
+    document.getElementById('music-search-panel').classList.add('hidden');
+    document.getElementById('music-title-input').value  = '';
+    document.getElementById('music-artist-input').value = '';
     if (!keepInputs) {
       document.getElementById('title-input').value   = '';
       document.getElementById('creator-input').value = '';

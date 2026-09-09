@@ -26,27 +26,43 @@ app.post('/api/recommend', async (c) => {
 
     // ── Music ────────────────────────────────────────────────────────
     if (category === 'music') {
-      const file = form.get('file') as File
-      if (!file || file.size === 0) return c.json({ error: 'Please upload a song.' }, 400)
-      if (file.size > 50 * 1024 * 1024) return c.json({ error: 'File too large. Max 50 MB.' }, 400)
+      const file   = form.get('file') as File | null
+      const textTitle  = (form.get('title')  as string || '').trim()
+      const textArtist = (form.get('artist') as string || '').trim()
 
-      const buffer = Buffer.from(await file.arrayBuffer())
-      const meta: Record<string, string> = {}
-      try {
-        const parsed = await parseBuffer(buffer, { mimeType: file.type })
-        const { common } = parsed
-        if (common.title)       meta.title  = common.title
-        if (common.artist)      meta.artist = common.artist
-        if (common.album)       meta.album  = common.album
-        if (common.genre?.[0])  meta.genre  = common.genre[0]
-        if (common.year)        meta.year   = String(common.year)
-        if (common.bpm)         meta.bpm    = String(Math.round(common.bpm))
-      } catch {}
-      if (!meta.title) meta.title = file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ')
+      if (textTitle) {
+        // Text-based search
+        messages = [{ role: 'user', content: `You are a music curator. Recommend 5 songs similar to "${textTitle}"${textArtist ? ' by ' + textArtist : ''}. Consider genre, era, mood, and artist style. Vary the picks.
 
-      const info = Object.entries(meta).map(([k, v]) => `${k}: ${v}`).join('\n')
+Return ONLY valid JSON:
+{
+  "detected": { "title": "${textTitle.replace(/"/g, '\\"')}", "creator": "${textArtist.replace(/"/g, '\\"')}" },
+  "recommendations": [
+    { "title": "...", "creator": "artist", "year": "...", "reason": "One specific sentence." }
+  ]
+}` }]
 
-      messages = [{ role: 'user', content: `You are a music curator. Recommend 5 songs based on this track's metadata. Consider genre, era, mood, and artist style. Vary the picks.
+      } else if (file && file.size > 0) {
+        // File upload
+        if (file.size > 50 * 1024 * 1024) return c.json({ error: 'File too large. Max 50 MB.' }, 400)
+
+        const buffer = Buffer.from(await file.arrayBuffer())
+        const meta: Record<string, string> = {}
+        try {
+          const parsed = await parseBuffer(buffer, { mimeType: file.type })
+          const { common } = parsed
+          if (common.title)       meta.title  = common.title
+          if (common.artist)      meta.artist = common.artist
+          if (common.album)       meta.album  = common.album
+          if (common.genre?.[0])  meta.genre  = common.genre[0]
+          if (common.year)        meta.year   = String(common.year)
+          if (common.bpm)         meta.bpm    = String(Math.round(common.bpm))
+        } catch {}
+        if (!meta.title) meta.title = file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ')
+
+        const info = Object.entries(meta).map(([k, v]) => `${k}: ${v}`).join('\n')
+
+        messages = [{ role: 'user', content: `You are a music curator. Recommend 5 songs based on this track's metadata. Consider genre, era, mood, and artist style. Vary the picks.
 
 ${info}
 
@@ -57,6 +73,10 @@ Return ONLY valid JSON:
     { "title": "...", "creator": "artist", "year": "...", "reason": "One specific sentence." }
   ]
 }` }]
+
+      } else {
+        return c.json({ error: 'Please upload a file or enter a song title.' }, 400)
+      }
 
     // ── Fashion (vision) ─────────────────────────────────────────────
     } else if (category === 'fashion') {
