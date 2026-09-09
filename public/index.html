@@ -110,17 +110,24 @@
     /* ═══════════════════════════════════════
        BOOKS — Open book spread
        ═══════════════════════════════════════ */
-    .open-book { display: grid; grid-template-columns: 1fr 10px 1fr; border-radius: 3px; box-shadow: 0 6px 28px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.06); overflow: hidden; position: relative; }
-    .open-book::after { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(0,0,0,0.06); pointer-events: none; }
-    .book-page-left { background: #ede8d2; padding: 36px 20px 40px 36px; background-image: repeating-linear-gradient(transparent 0px, transparent 27px, rgba(100,80,55,0.12) 27px, rgba(100,80,55,0.12) 28px); background-size: 100% 28px; background-position: 0 16px; min-height: 220px; }
-    .book-page-num { font-family: 'Playfair Display', serif; font-style: italic; font-size: 11px; color: rgba(100,80,55,0.3); text-align: center; margin-top: auto; padding-top: 12px; }
-    .book-spine { background: linear-gradient(90deg, #bfaa84 0%, #d6c49a 30%, #d0ba8e 55%, #d4c092 75%, #b8a278 100%); box-shadow: inset 2px 0 6px rgba(0,0,0,0.08), inset -2px 0 6px rgba(0,0,0,0.06); }
-    .book-page-right { background: #f3eedf; padding: 36px 36px 40px 20px; background-image: repeating-linear-gradient(transparent 0px, transparent 27px, rgba(100,80,55,0.1) 27px, rgba(100,80,55,0.1) 28px); background-size: 100% 28px; background-position: 0 16px; }
-    .book-page-right .form-label { color: rgba(90,65,35,0.65); }
-    .book-page-right .form-input { color: #1a1005; border-bottom-color: rgba(90,65,35,0.2); font-size: 19px; }
-    .book-field { margin-bottom: 24px; }
-    .book-page-right .pick-btn { background: #5c3d20; color: #f3eedf; }
-    .book-page-left-lines { display: flex; flex-direction: column; gap: 0; margin-top: 8px; }
+    .open-book { display: grid; grid-template-columns: 1fr 12px 1fr; border-radius: 2px; box-shadow: 0 8px 32px rgba(0,0,0,0.22), 0 2px 6px rgba(0,0,0,0.1); overflow: hidden; position: relative; }
+    .book-page-left { background: #e8e2cc; padding: 40px 16px 44px 40px; min-height: 240px; display: flex; flex-direction: column; justify-content: space-between; }
+    .book-page-left-deco { display: flex; flex-direction: column; gap: 10px; padding-top: 4px; }
+    .book-deco-line { height: 1px; background: rgba(100,80,55,0.12); border-radius: 1px; }
+    .book-deco-line:nth-child(1) { width: 65%; }
+    .book-deco-line:nth-child(2) { width: 80%; }
+    .book-deco-line:nth-child(3) { width: 55%; }
+    .book-deco-line:nth-child(4) { width: 72%; margin-top: 8px; }
+    .book-deco-line:nth-child(5) { width: 68%; }
+    .book-deco-line:nth-child(6) { width: 75%; }
+    .book-page-num { font-family: 'Playfair Display', serif; font-style: italic; font-size: 11px; color: rgba(100,80,55,0.3); }
+    .book-spine { background: linear-gradient(90deg, #8a7050 0%, #b89468 25%, #c8a878 50%, #b89468 75%, #8a7050 100%); box-shadow: inset 3px 0 8px rgba(0,0,0,0.15), inset -3px 0 8px rgba(0,0,0,0.1); position: relative; }
+    .book-spine::after { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(0,0,0,0.1); }
+    .book-page-right { background: #f5f0e4; padding: 40px 40px 44px 16px; }
+    .book-page-right .form-label { color: rgba(80,55,25,0.6); }
+    .book-page-right .form-input { color: #1a0e00; border-bottom-color: rgba(80,55,25,0.18); font-size: 19px; }
+    .book-field { margin-bottom: 28px; }
+    .book-page-right .pick-btn { background: #5c3d20; color: #f5f0e4; }
 
 
     /* ═══════════════════════════════════════
@@ -344,16 +351,24 @@
         '<div style="position:relative">' +
           '<div class="open-book">' +
             '<div class="book-page-left">' +
-              '<div class="book-page-num" style="margin-top:140px">i</div>' +
+              '<div class="book-page-left-deco">' +
+                '<div class="book-deco-line"></div>' +
+                '<div class="book-deco-line"></div>' +
+                '<div class="book-deco-line"></div>' +
+                '<div class="book-deco-line"></div>' +
+                '<div class="book-deco-line"></div>' +
+                '<div class="book-deco-line"></div>' +
+              '</div>' +
+              '<div class="book-page-num">i</div>' +
             '</div>' +
             '<div class="book-spine"></div>' +
             '<div class="book-page-right">' +
               formFields(cfg) +
-              '<button type="submit" form="text-form" class="pick-btn" style="background:#5c3d20;color:#f3eedf">Find matches</button>' +
+              '<button type="submit" form="text-form" class="pick-btn" style="background:#5c3d20;color:#f5f0e4">Find matches</button>' +
             '</div>' +
           '</div>' +
-          '<div style="position:absolute;right:-5px;top:5px;bottom:-5px;width:100%;background:#e6e0ca;z-index:-1;border-radius:3px"></div>' +
-          '<div style="position:absolute;right:-9px;top:9px;bottom:-9px;width:100%;background:#d8d2bc;z-index:-2;border-radius:3px"></div>' +
+          '<div style="position:absolute;right:-5px;top:5px;bottom:-5px;width:100%;background:#ddd7c0;z-index:-1;border-radius:2px"></div>' +
+          '<div style="position:absolute;right:-9px;top:9px;bottom:-9px;width:100%;background:#d0cab4;z-index:-2;border-radius:2px"></div>' +
         '</div>';
 
     } else if (cfg.frame === 'tv') {
