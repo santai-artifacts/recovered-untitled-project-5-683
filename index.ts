@@ -524,7 +524,7 @@ const html = `<!DOCTYPE html>
     var form = new FormData();
     form.append('category', currentCat);
     form.append('file', selectedFile);
-    return doRequest(form);
+    doRequest(form);
   }
 
   function submitText(e) {
@@ -536,7 +536,7 @@ const html = `<!DOCTYPE html>
     form.append('category', currentCat);
     form.append('title', title);
     form.append('creator', creator);
-    return doRequest(form);
+    doRequest(form);
   }
 
   async function doRequest(form) {
